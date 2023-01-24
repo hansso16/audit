@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<HTML lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<th:block th:replace="~{template :: headfiles}"></th:block>
+	</head>
+	<body>
+		<th:block th:replace="~{template :: menu}"></th:block>
+		<br>
+		<div class="container-fluid">
+			<div class="d-flex justify-content-center">
+	        	<form class="d-inline-flex" action="#" th:action="@{/customer}" method="GET" >
+			      	<div class="input-group">
+			      		<div class="form-outline">
+			      			<input class="form-control rounded" type="search" placeholder="Search Customer" 
+			      				name="search" th:value="${search}" aria-label="Search" autocomplete="off" >
+			      		</div>
+			      		<button class="btn btn-outline-primary" type="submit">Search</button >
+			      	</div>
+		      	</form>
+			</div>
+			<table class="table table-striped table-hover">
+				<thead>
+					<tr>
+						<th scope="col">Source Code</th >
+						<th scope="col">Customer Code</th >
+						<th scope="col">Store Name</th >
+						<th scope="col">Owner First Name</th >
+						<th scope="col">Owner Last Name</th >
+					</tr>
+				</thead>
+				<tbody th:if="${page != null}">
+					<tr th:each="customer : ${page.content}">
+						<td th:text="${customer.divisionCustomerCode}"></td >
+						<th scope="row">
+							<a th:class="button" th:href="@{/customer/}+${customer.customerCode} + @{/profile}" href="#" th:text="${customer.customerCode}">Customer Code</a>
+						</th >
+						<td th:text="${customer.storeName}"></td >
+						<td th:text="${#strings.capitalize(customer.ownerFirstName)}"></td >
+						<td th:text="${#strings.capitalize(customer.ownerLastName)}"></td >
+					</tr >
+				</tbody >
+			</table>
+			<th:block th:replace="~{template :: pagination(searchName='search', searchValue=${search})}"></th:block>
+		</div>
+		
+		<th:block th:replace="~{template :: footer}"></th:block >
+		<th:block th:replace="~{template :: scripts}"></th:block>
+	</body>
+</HTML >

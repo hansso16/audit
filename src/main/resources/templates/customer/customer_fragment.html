@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+	</head>
+	<body>
+		<!-- General -->
+		<tr th:fragment="1">
+			<form action="#" th:with="customer=${res.customerTO}">
+				<h5>Customer Profile</h5>
+				<input type="hidden" name="customerId" th:value="${res.customerCode}" value="asdf" />
+		        <div class="row mb-2">
+		        	<div class="col-3">
+		        		<label for="image" class="form-label">Store Photo</label >
+	                    <img  id="image" name="image" alt="Store Photo"
+	                    	 width="200" height="250" class="rounded form-control"/>
+		        	</div >
+		        	<div class="col-9">
+		        		<div class="row">
+				        	<div class="col-4">
+				        		<label for="divisionCustomerCode" class="form-label">Source Customer Code</label >
+			                    <input type="text" name="divisionCustomerCode" id="divisionCustomerCode" class="form-control is-invalid" th:value="${customer.divisionCustomerCode}" readonly required>
+			                    <div class="invalid-feedback">
+									Error/Warning message
+							    </div>
+				        	</div >
+				        	<div class="col">
+				        		<label for="storeName" class="form-label">Store Name</label >
+			                    <input type="text" name="storeName" id="storeName" class="form-control" th:value="${customer.storeName}" readonly required>
+				        	</div >
+		        		</div>
+		        		<div class="row">
+				        	<div class="col">
+				        		<label for="ownerFirstName" class="form-label">Owner First Name</label >
+			                    <input type="text" name="ownerFirstName" id="ownerFirstName" class="form-control" th:value="${customer.ownerFirstName}" readonly >
+				        	</div >
+				        	<div class="col-3">
+				        		<label for="ownerMiddleName" class="form-label">Owner Middle Name</label >
+			                    <input type="text" name="ownerMiddleName" id="ownerMiddleName" class="form-control" th:value="${customer.ownerMiddleName}" readonly>
+				        	</div >
+				        	<div class="col">
+				        		<label for="ownerLastName" class="form-label">Owner Last Name</label >
+			                    <input type="text" name="ownerLastName" id="ownerLastName" class="form-control" th:value="${customer.ownerLastName}"  readonly>
+				        	</div >
+		        		</div>
+		        		<div class="row">
+				        	<div class="col">
+				        		<label for="emailAddress" class="form-label">Email Address</label >
+			                    <input type="text" name="emailAddress" id="emailAddress" class="form-control" th:value="${customer.emailAddress}" readonly>
+				        	</div >
+				        	<div class="col">
+				        		<label for="assignedUser" class="form-label">Assigned User</label >
+			                    <input type="text" name="assignedUser" id="assignedUser" class="form-control" th:value="${customer.assignedUsername}" readonly>
+				        	</div >
+						</div>
+		        		<div class="row">
+				        	<div class="col">
+				        		<label for="lastChangedTimestamp" class="form-label">Last Changed Timestamp</label >
+			                    <input type="text" name="lastChangedTimestamp" id="lastChangedTimestamp" class="form-control digits" th:value="${customer.lastChangedTimestamp}" readonly >
+				        	</div >
+				        	<div class="col">
+				        		<label for="lastChangedUser" class="form-label">Last Changed User</label >
+			                    <input type="text" name="lastChangedUser" id="lastChangedUser" class="form-control digits" th:value="${customer.lastChangedUsername}" readonly>
+				        	</div >
+		        		</div>
+		        	</div>
+		        </div>
+		        <hr>
+		        <h5>Phone Number</h5>
+		        <th:block th:each="customerPhone,iter : ${res.customerPhoneList}">
+			        <div class="row" >
+			        	<div class="col">
+			        		<label th:for="'phoneType'+${iter.index}" class="form-label">Type</label >
+			        		<input type="text" name="telNo" th:id="'type'+${iter.index}" class="form-control digits" th:value="${customerPhone.phoneTypeDescription}" readonly>
+			        	</div >
+			        	<div class="col">
+			        		<label th:for="'phoneNumber'+${iter.index}" class="form-label">Phone Number</label >
+			        		<input type="text" name="telNo" th:id="'phoneNumber'+${iter.index}" class="form-control digits" th:value="${customerPhone.phoneNumber}" readonly>
+			        	</div >
+			        	<div class="col">
+			        		<label th:for="'entryTimestamp'+${iter.index}" class="form-label">Date Added</label >
+			        		<input type="text" name="telNo" th:id="'entryTimestamp'+${iter.index}" class="form-control digits" th:value="${customerPhone.entryTimestamp}" readonly>
+			        	</div >
+			        	<div class="col">
+			        		<label th:for="'username'+${iter.index}" class="form-label">Added by</label >
+			        		<input type="text" name="telNo" th:id="'username'+${iter.index}" class="form-control digits" th:value="${customerPhone.username}" readonly>
+			        	</div >
+			        </div>
+				</th:block>
+		        <hr>
+		        <h5>Customer Address</h5>
+		        <th:block th:each="customerAddress,iter : ${res.customerAddressList}">
+					<h6 th:text="${customerAddress.addressTypeDescription}" style="margin-bottom: 0;"></h6>
+			        <div class="row" >
+			        	<div class="col">
+			        		<label th:for="'region'+${iter.index}" class="form-label">Region</label >
+			        		<input type="text" name="telNo" id="telNo" class="form-control digits" th:value="${customerAddress.regionName}" readonly>
+			        	</div >
+			        	<div class="col">
+			        		<label th:for="'province'+${iter.index}" class="form-label">Province</label >
+			        		<input type="text" name="telNo" id="telNo" class="form-control digits" th:value="${customerAddress.provinceName}" readonly>
+			        	</div >
+			        	<div class="col">
+			        		<label th:for="'municipal'+${iter.index}" class="form-label">Municipal/City</label >
+			        		<input type="text" name="telNo" id="telNo" class="form-control digits" th:value="${customerAddress.municipalName}" readonly>
+			        	</div >
+			        </div>
+		        	<div class="row mb-4">
+			        	<div class="col">
+			        		<label th:for="'street'+${iter.index}" class="form-label">Street Name & House No.</label >
+		                    <input type="text" name="street" th:id="'street'+${iter.index}" class="form-control" th:value="${customerAddress.street}" readonly>
+			        	</div >
+			        	<div class="col-2">
+			        		<label th:for="'zipCode'+${iter.index}" class="form-label">Zip Code</label >
+		                    <input type="text" name="zipCode" th:id="'zipCode'+${iter.index}" class="form-control" th:value="${customerAddress.zipCode}" readonly>
+			        	</div >
+		        	</div>
+				</th:block>
+		        <hr>
+		        <div class="row">
+					<h5>Map Coordinates</h5>
+					<div class="col">
+				        <div class="mapa" id="map" style="width: 100%; height: 300px" 
+				        	th:attr="data-latitude=${customer.coordinateX},data-longitude=${customer.coordinateY}">
+			        	</div>
+					</div>
+				</div>
+	          	<!--  -->  
+			</form >
+		</tr>
+		
+		<!-- Customer Details -->
+		<tr th:fragment="2">
+			<form action="#" th:action="@{__${#ctx.springRequestContext.requestUri}__}" method="POST" id="employeeForm" 
+					enctype="multipart/form-data" th:with="customer=${res.customerTO}" autocomplete="off">
+				<h5>Customer Profile</h5>
+				<input type="hidden" name="customerTO.customerId" th:value="${customer.customerId}" value="" />
+				<input type="hidden" name="customerTO.customerCode" th:value="${customer.customerCode}" value="" />
+				<input type="hidden" name="customerTO.assignedUser" th:value="${customer.assignedUser}" value="" />
+				<input type="hidden" name="customerTO.entryTimestamp" th:value="${customer.entryTimestamp}" value="" />
+				<input type="hidden" name="customerTO.lastChangedUser" th:value="${customer.lastChangedUser}" value="" />
+		        <div class="row mb-2">
+		        	<div class="col-3">
+		        		<label for="image" class="form-label">Store Photo</label >
+	                    <img  id="image" name="image" alt="Store Photo"
+	                    	 width="200" height="250" class="rounded form-control"/>
+		        	</div >
+		        	<div class="col-9">
+		        		<div class="row">
+				        	<div class="col-4">
+				        		<label for="divisionCustomerCode" class="form-label">Source Customer Code</label >
+			                    <input type="text" name="customerTO.divisionCustomerCode" id="divisionCustomerCode" class="form-control" th:value="${customer.divisionCustomerCode}" readonly required>
+				        	</div >
+				        	<div class="col">
+				        		<label for="storeName" class="form-label">Store Name</label >
+			                    <input type="text" name="customerTO.storeName" id="storeName" class="form-control" th:value="${customer.storeName}" th:readonly="${!isUpdate}" readonly required>
+				        	</div >
+		        		</div>
+		        		<div class="row">
+				        	<div class="col">
+				        		<label for="ownerFirstName" class="form-label">Owner First Name</label >
+			                    <input type="text" name="customerTO.ownerFirstName" id="ownerFirstName" class="form-control" th:value="${customer.ownerFirstName}" th:readonly="${!isUpdate}" readonly required>
+				        	</div >
+				        	<div class="col-3">
+				        		<label for="ownerMiddleName" class="form-label">Owner Middle Name</label >
+			                    <input type="text" name="customerTO.ownerMiddleName" id="ownerMiddleName" class="form-control" th:value="${customer.ownerMiddleName}" th:readonly="${!isUpdate}" readonly required>
+				        	</div >
+				        	<div class="col">
+				        		<label for="ownerLastName" class="form-label">Owner Last Name</label >
+			                    <input type="text" name="customerTO.ownerLastName" id="ownerLastName" class="form-control" th:value="${customer.ownerLastName}" th:readonly="${!isUpdate}" readonly required>
+				        	</div >
+		        		</div>
+		        		<div class="row">
+				        	<div class="col">
+				        		<label for="emailAddress" class="form-label">Email Address</label >
+			                    <input type="text" name="customerTO.emailAddress" id="emailAddress" class="form-control" th:value="${customer.emailAddress}" th:readonly="${!isUpdate}" readonly required>
+				        	</div >
+				        	<div class="col">
+				        		<label for="assignedUser" class="form-label">Assigned User</label >
+			                    <input type="text" name="customerTO.assignedUsername" id="assignedUser" class="form-control" th:value="${customer.assignedUsername}" readonly required>
+				        	</div >
+						</div>
+		        		<div class="row">
+				        	<div class="col">
+				        		<label for="lastChangedTimestamp" class="form-label">Last Changed Timestamp</label >
+			                    <input type="text" name="customerTO.lastChangedTimestamp" id="lastChangedTimestamp" class="form-control digits" th:value="${customer.lastChangedTimestamp}" readonly required>
+				        	</div >
+				        	<div class="col">
+				        		<label for="lastChangedUser" class="form-label">Last Changed User</label >
+			                    <input type="text" name="customerTO.lastChangedUsername" id="lastChangedUser" class="form-control digits" th:value="${customer.lastChangedUsername}" readonly required>
+				        	</div >
+		        		</div>
+		        	</div>
+		        </div>
+		        <div class="row">
+					<div class="col">
+		        		<label for="coordinateX" class="form-label">COORDINATE-X</label >
+	                    <input type="text" name="customerTO.coordinateX" id="coordinateX" class="form-control digits" th:value="${customer.coordinateX}" th:readonly="${!isUpdate}" readonly required>
+					</div>
+					<div class="col">
+		        		<label for="coordinateY" class="form-label">COORDINATE-Y</label >
+	                    <input type="text" name="customerTO.coordinateY" id="coordinateY" class="form-control digits" th:value="${customer.coordinateY}" th:readonly="${!isUpdate}" readonly required>
+					</div>
+				</div>
+		        <th:block  th:if="${isUpdate}">
+					<hr>
+		        	<div class="d-flex">
+				        <div class="me-auto">
+						        <button class="btn btn-primary" type="submit" id="submitBtn">Save</button >
+						        <button class="btn btn-secondary" type="reset">Reset</button >
+						        <!--<input class="btn btn-secondary" type="reset" value="Reset">-->
+						        <a class="btn btn-secondary" href="#" th:href="@{__${#ctx.springRequestContext.requestUri}__}">Cancel</a>
+				        </div>
+		        	</div>
+		        </th:block >
+			</form >
+		</tr>
+		
+		<!-- Customer Address-->
+		<tr th:fragment="3">
+			<form action="#" th:action="@{__${#ctx.springRequestContext.requestUri}__}" method="POST" id="employeeForm" 
+				autocomplete="off">
+		    	<h5>Employee Address</h5>
+				<input type="hidden" name="customerId" th:value="${res.customerId}" value="" />
+				<th:block th:each="customerAddress,iter : ${res.customerAddressList}">
+			        <div class="row" >
+						<input type="hidden" th:name="'customerAddress[' + ${iter.index} + '].id.addressType'" th:value="${customerAddress.addressType}" />
+						<input type="hidden" th:name="'customerAddress[' + ${iter.index} + '].id.customerId'" th:value="${customerAddress.customerId}" />
+			        	<h5 class="mt-2" th:text="${customerAddress.addressTypeDescription}"></h5 >
+			        	<div class="col">
+			        		<label th:for="'region'+${iter.index}" class="form-label">Region</label >
+		                    <select th:disabled="${!isUpdate}" th:id="'region'+${iter.index}" th:name="'customerAddress[' + ${iter.index} + '].region'" 
+		                    	class="form-select form-control" aria-label="RegionSelect" onchange="deriveAddress(this)" required>
+								<option></option>
+								<option th:each="regionIter : ${customerAddress.regionList}" th:value="${regionIter.regionId}" 
+									th:text="${regionIter.regionName}+' - '+${regionIter.regionDescription}"
+									th:selected="${customerAddress.region == regionIter.regionId}" >Region</option>
+							</select>
+			        	</div >
+			        	<div class="col">
+			        		<label th:for="'province'+${iter.index}" class="form-label">Province</label >
+		                    <select th:disabled="${!isUpdate}" th:id="'province'+${iter.index}" th:name="'customerAddress[' + ${iter.index} + '].province'" 
+		                    	class="form-select form-control" aria-label="RegionSelect" onchange="deriveAddress(this)" required>
+								<option></option>
+								<option th:each="provinceIter : ${customerAddress.provinceList}" th:value="${provinceIter.provinceId}" th:text="${provinceIter.provinceName}" 
+								th:selected="${customerAddress.province == provinceIter.provinceId}" >Province</option>
+							</select>
+			        	</div >
+			        	<div class="col">
+			        		<label th:for="'municipal'+${iter.index}" class="form-label">Municipal/City</label >
+		                    <select th:disabled="${!isUpdate}" th:id="'municipal'+${iter.index}" th:name="'customerAddress[' + ${iter.index} + '].municipal'" 
+		                    	class="form-select form-control" aria-label="RegionSelect" required>
+								<option></option>
+								<option th:each="municipalIter : ${customerAddress.municipalList}" th:value="${municipalIter.municipalId}" 
+									th:text="${municipalIter.municipalName}" th:selected="${customerAddress.municipal == municipalIter.municipalId}" >Municipal</option>
+							</select>
+			        	</div >
+			        </div>
+		        	<div class="row">
+			        	<div class="col">
+			        		<label th:for="'street'+${iter.index}" class="form-label">Street Name & House No.</label >
+		                    <input type="text" name="street" th:id="'street'+${iter.index}" class="form-control" th:name="'customerAddress[' + ${iter.index} + '].street'" th:value="${customerAddress.street}" th:readonly="${!isUpdate}" readonly required>
+			        	</div >
+			        	<div class="col-2">
+			        		<label th:for="'zipCode'+${iter.index}" class="form-label">Zip Code</label >
+		                    <input type="text" name="zipCode" th:id="'zipCode'+${iter.index}" class="form-control" th:name="'customerAddress[' + ${iter.index} + '].zipCode'" th:value="${customerAddress.zipCode}" th:readonly="${!isUpdate}" readonly required>
+			        	</div >
+		        	</div>
+				</th:block>
+	        	<hr>
+	        	<div class="d-flex">
+			        <div class="me-auto">
+				        <th:block  th:if="${isUpdate}">
+					        <button class="btn btn-primary" type="submit" id="submitBtn">Save</button >
+					        <button class="btn btn-secondary" type="reset">Reset</button >
+					        <!--<input class="btn btn-secondary" type="reset" value="Reset">-->
+					        <a class="btn btn-secondary" href="#" th:href="@{__${#ctx.springRequestContext.requestUri}__}">Cancel</a>
+				        </th:block >
+			        </div>
+			        <a class="btn btn-primary" th:href="@{__${#ctx.springRequestContext.requestUri}__/history/1}" type="button" id="addressHistoryBtn" href="#" >View Address History</a >
+	        	</div>
+			</form >
+		</tr>
+		
+		<!-- Customer Address History -->
+		<tr th:fragment="31">
+	    	<h5>Address History</h5>
+			<input type="hidden" name="customerCode" th:value="${res.customerCode}" value="" />
+			<input type="hidden" name="customerId" th:value="${res.customerTO.customerId}" value="" />
+			<div class="container">
+				<div class="card my-4" th:if="${res != null}">
+				    <div class="card-header text-center">
+				        <ul class="nav nav-tabs card-header-tabs">
+				            <li class="nav-item">
+				                <a class="nav-link" th:classappend="${#ctx.springRequestContext.requestUri.endsWith('1') ? 'active disabled' : ''}" href="#" th:href="@{/customer/} + ${res.customerCode} + @{/address/history/1}">Delivery Address/Store Location</a>
+				            </li>
+				            <li class="nav-item">
+				                <a class="nav-link" th:classappend="${#ctx.springRequestContext.requestUri.endsWith('2') ? 'active disabled' : ''}" href="#" th:href="@{/customer/} + ${res.customerCode} + @{/address/history/2}">Purchasing Office Address</a>
+				            </li>
+				            <li class="nav-item">
+				                <a class="nav-link" th:classappend="${#ctx.springRequestContext.requestUri.endsWith('3') ? 'active disabled' : ''}" href="#" th:href="@{/customer/} + ${res.customerCode} + @{/address/history/3}">Warehouse Address</a>
+				            </li>
+				            <li class="nav-item">
+				                <a class="nav-link" th:classappend="${#ctx.springRequestContext.requestUri.endsWith('4') ? 'active disabled' : ''}" href="#" th:href="@{/customer/} + ${res.customerCode} + @{/address/history/4}">Owner Address</a>
+				            </li>
+				        </ul>
+				    </div>
+				    <div class="card-body">
+				    	<table class="table table-hover" th:if="${res.customerAddressHistoryList != null}">
+				    		<thead>
+				    			<tr>
+				    				<th colspan="2">House No./Street</th>
+				    				<th>Municipal</th>
+				    				<th>Province</th>
+				    				<th>Region</th>
+				    				<th>Timestamp</th>
+				    				<th>User</th>
+				    			</tr>
+				    		</thead>
+				    		<tbody>
+				    			<tr th:each="customerAddressHistory,iter : ${res.customerAddressHistoryList}">
+				    				<td colspan="2" th:text="${customerAddressHistory.street}">HOUSE NO./STREET</td>
+				    				<td th:text="${customerAddressHistory.municipalName}">MUNICIPAL/CITY</td>
+				    				<td th:text="${customerAddressHistory.provinceName}">PROVINCE</td>
+				    				<td th:text="${customerAddressHistory.regionName}">REGION</td>
+				    				<td th:text="${customerAddressHistory.entryTimestamp}">ENTRY_TIMESTAMP</td>
+				    				<td th:text="${customerAddressHistory.username}">USERNAME</td>
+				    			</tr>
+				    		</tbody>
+				    	</table>
+				    </div>
+				</div>
+				<div class="row">
+					<div class="col me-auto"></div>
+					<div class="col-auto">
+			        	<a class="btn btn-primary" th:href="@{/customer/} + ${res.customerCode} + @{/address}" type="button" id="empAddressBtn" href="#" >Go Back</a >
+					</div>
+				</div>
+			</div>
+		</tr>
+		
+		<!-- Customer Phone Number -->
+		<tr th:fragment="4">
+			<form action="#" th:action="@{__${#ctx.springRequestContext.requestUri}__}" method="POST" id="employeeForm" >
+		        <h5>Customer Phone Number(s)</h5>
+				<input type="hidden" th:name="customerId" th:value="${res.customerId}" />
+		        <div class="row mb-2" th:each="customerPhone,iter : ${res.customerPhoneTOList}">
+					<input type="hidden" th:name="'customerPhone[' + ${iter.index} + '].customerPhoneId'" th:value="${customerPhone.customerPhoneId}" />
+					<input type="hidden" th:name="'customerPhone[' + ${iter.index} + '].customerId'" th:value="${customerPhone.customerId}" />
+					<input type="hidden" th:name="'customerPhone[' + ${iter.index} + '].phoneType'" th:value="${customerPhone.phoneType}" />
+		        	<div class="col-auto">
+		        		<label for="phoneType" class="form-label">Phone Type</label >
+	                    <input type="text" name="phoneType" id="phoneType" class="form-control" th:value="${customerPhone.phoneTypeDescription}" readonly required>
+		        	</div >
+		        	<div class="col">
+		        		<label for="phoneNumber" class="form-label">Phone Number</label >
+	                    <input type="text" name="phoneNumber" th:name="'customerPhone[' + ${iter.index} + '].phoneNumber'" 
+	                    	id="phoneNumber" class="form-control" th:value="${customerPhone.phoneNumber}" th:readonly="${!isUpdate}" readonly required>
+		        	</div >
+		        	<div class="col-auto">
+		        		<label for="entryTimestamp" class="form-label">Entry Timestamp</label >
+	                    <input type="text" id="entryTimestamp" class="form-control" th:value="${customerPhone.entryTimestamp}" readonly required>
+		        	</div >
+		        	<div class="col-3">
+		        		<label for="username" class="form-label">User</label >
+		        		<div class="input-group">
+		                    <input type="text" name="username" th:name="'customerPhone[' + ${iter.index} + '].username'" 
+		                    	id="username" class="form-control" th:value="${customerPhone.username}" readonly required>
+			        		<a th:if="${isUpdate}" type="button" class="btn btn-outline-danger" th:text="Remove" sec:Authorize="hasRole('ROLE_SUPV')" 
+			        			th:href="@{__${#ctx.springRequestContext.requestUri}__/delete?customerPhoneId=} + ${customerPhone.customerPhoneId}"></a >
+		        		</div>
+		        	</div >
+		        </div>
+		        <div class="row justify-content-center" th:if="${!isUpdate}" sec:authorize="hasRole('SUPV')">
+		        	<div class="col-4">
+		        		<a class="btn btn-outline-primary w-100" th:text="'Add PhoneNumber'" href="#"  th:href="@{__${#ctx.springRequestContext.requestUri}__/add}">Add</a>
+		        	</div>
+		        </div>
+		        <div th:if="${isUpdate}">
+		        	<hr>
+			        <button class="btn btn-primary" type="submit" id="submitBtn">Save</button >
+			        <button class="btn btn-secondary" type="reset">Reset</button >
+			        <a class="btn btn-secondary" href="#" th:href="@{__${#ctx.springRequestContext.requestUri}__}">Cancel</a>
+		        </div >
+			</form>
+		</tr>
+		
+		<!-- Register Customer Phone -->
+		<tr th:fragment="41">
+			<form action="#" th:action="@{__${#ctx.springRequestContext.requestUri}__}" method="POST" id="employeeForm" autocomplete="off" >
+		        <h5>Add Phone Number</h5>
+		        <input type="hidden" th:name="customerCode" th:value="${res.customerCode}" />
+		        <div class="" id="addPhoneForm">
+		        </div>
+		        <div class="row justify-content-center">
+		        	<div class="col-4">
+		        		<a class="btn btn-outline-primary w-100" th:text="'Add Dependent'" id="addPhone" href="#">Add</a>
+		        	</div>
+		        </div>
+		        <div>
+		        	<hr>
+			        <button class="btn btn-primary" type="submit" id="submitBtn">Save</button >
+			        <button class="btn btn-secondary" type="reset">Reset</button >
+			        <a class="btn btn-secondary" href="#" th:href="@{/customer/}+${res.customerCode}+@{/phone}">Cancel</a>
+		        </div >
+			</form>
+		</tr>
+	</body>
+</html>

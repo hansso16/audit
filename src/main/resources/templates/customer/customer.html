@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<HTML lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<th:block th:replace="~{template :: headfiles}"></th:block>
+		<meta name="_csrf" th:content="${_csrf.token}"/>
+		<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+	</head>
+	<body>
+		<th:block th:replace="~{template :: menu}"></th:block>
+		<br>
+		<div class="container">
+			<div th:if="${errorMessage != null && !#strings.isEmpty(errorMessage)}" class="alert alert-danger alert-dismissible fade show" role="alert">
+			  	<span th:text="${errorMessage}"></span >
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
+			<div th:if="${successMessage != null && !#strings.isEmpty(successMessage)}" class="alert alert-success alert-dismissible fade show" role="alert">
+			  	<span th:text="${successMessage}"></span >
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
+			<div class="card mb-4" th:if="${res != null}">
+			    <div class="card-header text-center">
+			        <ul class="nav nav-tabs card-header-tabs me-auto">
+			            <li class="nav-item">
+			                <a class="nav-link" th:classappend="${#ctx.springRequestContext.requestUri.endsWith('profile') ? 'active disabled' : ''}" href="#" th:href="@{/customer/} + ${res.customerCode} + @{/profile}" th:text="Profile">Profile</a>
+			            </li>
+			            <li class="nav-item" th:if="${res.customerTO.assignedUsername==#authentication.getPrincipal().getUsername() || #authorization.expression('hasRole(''SUPV'')')}">
+			                <a class="nav-link" th:classappend="${#ctx.springRequestContext.requestUri.endsWith('details') ? 'active disabled' : ''}" href="#" th:href="@{/customer/} + ${res.customerCode} + @{/details}" th:text="Details">Details</a>
+			            </li>
+			            <li class="nav-item" th:if="${res.customerTO.assignedUsername==#authentication.getPrincipal().getUsername() || #authorization.expression('hasRole(''SUPV'')')}" >
+			                <a class="nav-link" th:classappend="${#ctx.springRequestContext.requestUri.contains('address') ? 'active disabled' : ''}" href="#" th:href="@{/customer/} + ${res.customerCode} + @{/address}" th:text="Address">Address</a>
+			            </li>
+			            <li class="nav-item me-auto" th:if="${res.customerTO.assignedUsername==#authentication.getPrincipal().getUsername() || #authorization.expression('hasRole(''SUPV'')')}">
+			                <a class="nav-link" th:classappend="${#ctx.springRequestContext.requestUri.endsWith('phone') ? 'active disabled' : ''}" href="#" th:href="@{/customer/} + ${res.customerCode} + @{/phone}" th:text="Phone">Phone Number</a>
+			            </li>
+			            <!--<li class="nav-item me-auto" th:if="${res.customerTO.assignedUsername==#authentication.getPrincipal().getUsername() || #authorization.expression('hasRole(''SUPV'')')}">
+			                <a class="nav-link" th:classappend="${#ctx.springRequestContext.requestUri.endsWith('activity') ? 'active disabled' : ''}" href="#" th:href="@{/customer/} + ${res.customerCode} + @{/activity}" th:text="Activity">Activity</a>
+			            </li>-->
+			            <li class="nav-item" th:if="${#ctx.springRequestContext.requestUri.endsWith('details')}" sec:authorize="hasRole('SUPV')">
+			                <a class="nav-link" href="#" th:href="@{#ctx.springRequestContext.requestUri} + @{?isUpdate=true}">TODO: Assign Customer</a>
+			            </li>
+			            <li class="nav-item" th:if="${!#ctx.springRequestContext.requestUri.endsWith('profile') && !isUpdate}" sec:authorize="hasRole('STAFF')">
+			                <a class="nav-link" href="#" th:href="@{${#ctx.springRequestContext.requestUri}} + @{?isUpdate=true}">Update</a>
+			            </li>
+			        </ul>
+			    </div>
+			    <div class="card-body">
+			    	<div class="row"> 
+				    	<h4>
+				    		<span th:text="'Customer Code: '"></span >
+				    		<em><span th:text="${res.customerCode}"></span ></em>
+				    	</h4>
+			    	</div >
+			        <th:block><div th:replace="~{customer/customer_fragment :: ${viewType}}"></div></th:block>
+			    </div>
+			</div>
+		</div>
+		
+		<th:block th:replace="~{template :: footer}"></th:block >
+		<script th:if="${viewType} == 1 or ${viewType} == 3 or ${viewType} == 41" type="text/javascript" th:src="@{/js/public/jquery-3.6.0.min.js}"></script>
+		<th:block th:replace="~{template :: scripts}"></th:block>
+		<script th:if="${viewType} == 1" type="text/javascript" th:src="@{/js/customer/customer_profile.js}"></script>
+		<script th:if="${viewType} == 3" type="text/javascript" th:src="@{/js/customer/customer_address.js}"></script>
+		<script th:if="${viewType} == 41" type="text/javascript" th:src="@{/js/customer/customer_phone_add.js}"></script>
+		<script th:if="${viewType} == 9" type="text/javascript" th:src="@{/js/customer/employee_info.js}"></script>
+		<script th:if="${viewType} == 9" type="text/javascript" th:src="@{/js/customer/employee_benefits.js}"></script>
+		<script th:if="${viewType} == 1" type="text/javascript"
+        	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCnhjMsukDP68JzroqhgQubksof8OUf400"></script>
+		<script th:inline="javascript">
+			var customerId = /*[[${res.customerId}]]*/ '';
+		</script >
+	</body>
+</HTML >

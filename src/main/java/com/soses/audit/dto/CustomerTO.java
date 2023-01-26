@@ -1,6 +1,7 @@
 package com.soses.audit.dto;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 public class CustomerTO {
 
@@ -12,15 +13,40 @@ public class CustomerTO {
     private String ownerMiddleName;
     private String ownerLastName;
     private String emailAddress;
+    private String customerStatus;
+    private String customerStatusDescription;
     private BigDecimal coordinateX;
     private BigDecimal coordinateY;
     private String assignedUser;
+    private String mayorPermitNo;
+    private LocalDate mayorPermitExpDate;
+    private String ltoFdaNo;
+    private LocalDate ltoFdaExpDate;
+    private String dtiNo;
+    private LocalDate dtiExpDate;
+    private String birOcn;
+    private LocalDate birRegDate;
+    private String storePhoto;
+    private String b64EncodedImg;
+    private String remarks;
     private String entryTimestamp;
     private String lastChangedTimestamp;
     private String lastChangedUser;
     private String lastChangedUsername;
     private String assignedUsername;
     
+	public String getB64EncodedImg() {
+		return b64EncodedImg;
+	}
+	public void setB64EncodedImg(String b64EncodedImg) {
+		this.b64EncodedImg = b64EncodedImg;
+	}
+	public String getCustomerStatusDescription() {
+		return customerStatusDescription;
+	}
+	public void setCustomerStatusDescription(String customerStatusDescription) {
+		this.customerStatusDescription = customerStatusDescription;
+	}
 	public String getLastChangedUsername() {
 		return lastChangedUsername;
 	}
@@ -122,9 +148,80 @@ public class CustomerTO {
 		return "CustomerTO [customerId=" + customerId + ", customerCode=" + customerCode + ", divisionCustomerCode="
 				+ divisionCustomerCode + ", storeName=" + storeName + ", ownerFirstName=" + ownerFirstName
 				+ ", ownerMiddleName=" + ownerMiddleName + ", ownerLastName=" + ownerLastName + ", emailAddress="
-				+ emailAddress + ", coordinateX=" + coordinateX + ", coordinateY=" + coordinateY + ", assignedUser="
-				+ assignedUser + ", entryTimestamp=" + entryTimestamp + ", lastChangedTimestamp=" + lastChangedTimestamp
+				+ emailAddress + ", customerStatus=" + customerStatus + ", customerStatusDescription="
+				+ customerStatusDescription + ", coordinateX=" + coordinateX + ", coordinateY=" + coordinateY
+				+ ", assignedUser=" + assignedUser + ", mayorPermitNo=" + mayorPermitNo + ", mayorPermitExpDate="
+				+ mayorPermitExpDate + ", ltoFdaNo=" + ltoFdaNo + ", ltoFdaExpDate=" + ltoFdaExpDate + ", dtiNo="
+				+ dtiNo + ", dtiExpDate=" + dtiExpDate + ", birOcn=" + birOcn + ", birRegDate=" + birRegDate
+				+ ", storePhoto=" + storePhoto + ", b64EncodedImg=" + b64EncodedImg + ", remarks=" + remarks
+				+ ", entryTimestamp=" + entryTimestamp + ", lastChangedTimestamp=" + lastChangedTimestamp
 				+ ", lastChangedUser=" + lastChangedUser + ", lastChangedUsername=" + lastChangedUsername
 				+ ", assignedUsername=" + assignedUsername + "]";
+	}
+	public String getCustomerStatus() {
+		return customerStatus;
+	}
+	public void setCustomerStatus(String customerStatus) {
+		this.customerStatus = customerStatus;
+	}
+	public String getMayorPermitNo() {
+		return mayorPermitNo;
+	}
+	public void setMayorPermitNo(String mayorPermitNo) {
+		this.mayorPermitNo = mayorPermitNo;
+	}
+	public LocalDate getMayorPermitExpDate() {
+		return mayorPermitExpDate;
+	}
+	public void setMayorPermitExpDate(LocalDate mayorPermitExpDate) {
+		this.mayorPermitExpDate = mayorPermitExpDate;
+	}
+	public String getLtoFdaNo() {
+		return ltoFdaNo;
+	}
+	public void setLtoFdaNo(String ltoFdaNo) {
+		this.ltoFdaNo = ltoFdaNo;
+	}
+	public LocalDate getLtoFdaExpDate() {
+		return ltoFdaExpDate;
+	}
+	public void setLtoFdaExpDate(LocalDate ltoFdaExpDate) {
+		this.ltoFdaExpDate = ltoFdaExpDate;
+	}
+	public String getDtiNo() {
+		return dtiNo;
+	}
+	public void setDtiNo(String dtiNo) {
+		this.dtiNo = dtiNo;
+	}
+	public LocalDate getDtiExpDate() {
+		return dtiExpDate;
+	}
+	public void setDtiExpDate(LocalDate dtiExpDate) {
+		this.dtiExpDate = dtiExpDate;
+	}
+	public String getBirOcn() {
+		return birOcn;
+	}
+	public void setBirOcn(String birOcn) {
+		this.birOcn = birOcn;
+	}
+	public LocalDate getBirRegDate() {
+		return birRegDate;
+	}
+	public void setBirRegDate(LocalDate birRegDate) {
+		this.birRegDate = birRegDate;
+	}
+	public String getStorePhoto() {
+		return storePhoto;
+	}
+	public void setStorePhoto(String storePhoto) {
+		this.storePhoto = storePhoto;
+	}
+	public String getRemarks() {
+		return remarks;
+	}
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
 	}
  }

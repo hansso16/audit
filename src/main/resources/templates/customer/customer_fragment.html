@@ -9,19 +9,16 @@
 				<h5>Customer Profile</h5>
 				<input type="hidden" name="customerId" th:value="${res.customerCode}" value="asdf" />
 		        <div class="row mb-2">
-		        	<div class="col-3">
+		        	<div class="col-4">
 		        		<label for="image" class="form-label">Store Photo</label >
-	                    <img  id="image" name="image" alt="Store Photo"
-	                    	 width="200" height="250" class="rounded form-control"/>
+	                    <img  th:src="'data:image/jpeg;base64,'+${customer.b64EncodedImg}" id="image" name="image" alt="Store Photo"
+	                    	 width="250" height="250" class="rounded form-control"/>
 		        	</div >
-		        	<div class="col-9">
+		        	<div class="col-8">
 		        		<div class="row">
 				        	<div class="col-4">
 				        		<label for="divisionCustomerCode" class="form-label">Source Customer Code</label >
-			                    <input type="text" name="divisionCustomerCode" id="divisionCustomerCode" class="form-control is-invalid" th:value="${customer.divisionCustomerCode}" readonly required>
-			                    <div class="invalid-feedback">
-									Error/Warning message
-							    </div>
+			                    <input type="text" name="divisionCustomerCode" id="divisionCustomerCode" class="form-control" th:value="${customer.divisionCustomerCode}" readonly required>
 				        	</div >
 				        	<div class="col">
 				        		<label for="storeName" class="form-label">Store Name</label >
@@ -30,15 +27,15 @@
 		        		</div>
 		        		<div class="row">
 				        	<div class="col">
-				        		<label for="ownerFirstName" class="form-label">Owner First Name</label >
+				        		<label for="ownerFirstName" class="form-label">First Name</label >
 			                    <input type="text" name="ownerFirstName" id="ownerFirstName" class="form-control" th:value="${customer.ownerFirstName}" readonly >
 				        	</div >
 				        	<div class="col-3">
-				        		<label for="ownerMiddleName" class="form-label">Owner Middle Name</label >
+				        		<label for="ownerMiddleName" class="form-label">Middle Name</label >
 			                    <input type="text" name="ownerMiddleName" id="ownerMiddleName" class="form-control" th:value="${customer.ownerMiddleName}" readonly>
 				        	</div >
 				        	<div class="col">
-				        		<label for="ownerLastName" class="form-label">Owner Last Name</label >
+				        		<label for="ownerLastName" class="form-label">Last Name</label >
 			                    <input type="text" name="ownerLastName" id="ownerLastName" class="form-control" th:value="${customer.ownerLastName}"  readonly>
 				        	</div >
 		        		</div>
@@ -46,6 +43,10 @@
 				        	<div class="col">
 				        		<label for="emailAddress" class="form-label">Email Address</label >
 			                    <input type="text" name="emailAddress" id="emailAddress" class="form-control" th:value="${customer.emailAddress}" readonly>
+				        	</div >
+				        	<div class="col">
+				        		<label for="customerStatus" class="form-label">Customer Status</label >
+			                    <input type="text" name="customerStatus" id="customerStatus" class="form-control" th:value="${customer.customerStatusDescription}" readonly>
 				        	</div >
 				        	<div class="col">
 				        		<label for="assignedUser" class="form-label">Assigned User</label >
@@ -64,6 +65,67 @@
 		        		</div>
 		        	</div>
 		        </div>
+		        <div class="row">
+					<div class="col">
+		        		<label for="mayorPermitNo" class="form-label">Mayor Permit No.</label >
+	                    <input type="text" name="mayorPermitNo" id="mayorPermitNo" class="form-control" th:value="${customer.mayorPermitNo}" readonly >
+		        	</div >
+		        	<div class="col">
+		        		<label for="mayorPermitExpDate" class="form-label">Mayor Permit Expiration Date</label >
+	                    <input type="text" name="mayorPermitExpDate" id="mayorPermitExpDate" class="form-control" 
+	                    	th:classappend="${customer.mayorPermitExpDate < #temporals.createToday()  ? 'is-invalid' : ''}" th:value="${#temporals.format(customer.mayorPermitExpDate, 'LLLL dd, yyyy')}" readonly>
+	                    <div class="invalid-feedback">
+							Expired
+					    </div>
+		        	</div >
+				</div>
+		        <div class="row">
+					<div class="col">
+		        		<label for="ltoFdaNo" class="form-label">LTO/FDA No.</label >
+	                    <input type="text" name="ltoFdaNo" id="ltoFdaNo" class="form-control" th:value="${customer.ltoFdaNo}" readonly >
+		        	</div >
+		        	<div class="col">
+		        		<label for="ltoFdaExpDate" class="form-label">LTO/FDA Expiration Date</label >
+	                    <input type="text" name="ltoFdaExpDate" id="ltoFdaExpDate" class="form-control" 
+	                    	th:classappend="${customer.ltoFdaExpDate < #temporals.createToday()  ? 'is-invalid' : ''}" th:value="${#temporals.format(customer.ltoFdaExpDate, 'LLLL dd, yyyy')}" readonly>
+			        	<div class="invalid-feedback">
+							Expired
+					    </div>
+		        	</div >
+				</div>
+		        <div class="row">
+					<div class="col">
+		        		<label for="dtiNo" class="form-label">DTI No.</label >
+	                    <input type="text" name="dtiNo" id="dtiNo" class="form-control" th:value="${customer.dtiNo}" readonly >
+		        	</div >
+		        	<div class="col">
+		        		<label for="dtiExpDate" class="form-label">DTI Expiration Date</label >
+	                    <input type="text" name="dtiExpDate" id="dtiExpDate" class="form-control" 
+	                    	th:classappend="${customer.dtiExpDate < #temporals.createToday()  ? 'is-invalid' : ''}" th:value="${#temporals.format(customer.dtiExpDate, 'LLLL dd, yyyy')}" readonly>
+		        	</div >
+		        	<div class="invalid-feedback">
+						Expired
+				    </div>
+				</div>
+		        <div class="row">
+					<div class="col">
+		        		<label for="birOcn" class="form-label">(2303) BIR Registration No.</label >
+	                    <input type="text" name="birOcn" id="birOcn" class="form-control" th:value="${customer.birOcn}" readonly >
+		        	</div >
+		        	<div class="col">
+		        		<label for="birRegDate" class="form-label">(2303) BIR Registration Date</label >
+	                    <input type="text" name="birRegDate" id="birRegDate" class="form-control" th:value="${#temporals.format(customer.birRegDate, 'LLLL dd, yyyy')}" readonly>
+		        	</div >
+		        	<div class="invalid-feedback">
+						Expired
+				    </div>
+				</div>
+		        <div class="row">
+		        	<div class="col">
+		        		<label for="remarks" class="form-label">Remarks</label >
+	                    <textarea name="remarks" id="remarks" class="form-control" style="height:100px;" th:text="${customer.remarks}" readonly></textarea>
+		        	</div >
+				</div>
 		        <hr>
 		        <h5>Phone Number</h5>
 		        <th:block th:each="customerPhone,iter : ${res.customerPhoneList}">
@@ -138,13 +200,14 @@
 				<input type="hidden" name="customerTO.assignedUser" th:value="${customer.assignedUser}" value="" />
 				<input type="hidden" name="customerTO.entryTimestamp" th:value="${customer.entryTimestamp}" value="" />
 				<input type="hidden" name="customerTO.lastChangedUser" th:value="${customer.lastChangedUser}" value="" />
+				<input type="hidden" name="customerTO.storePhoto" th:value="${customer.storePhoto}" value="asdf" />
 		        <div class="row mb-2">
-		        	<div class="col-3">
+		        	<div class="col-4">
 		        		<label for="image" class="form-label">Store Photo</label >
-	                    <img  id="image" name="image" alt="Store Photo"
-	                    	 width="200" height="250" class="rounded form-control"/>
+	                    <img  th:src="'data:image/jpeg;base64,'+${customer.b64EncodedImg}" id="image" name="image" alt="Store Photo"
+	                    	 width="250" height="250" class="rounded form-control"/>
 		        	</div >
-		        	<div class="col-9">
+		        	<div class="col-8">
 		        		<div class="row">
 				        	<div class="col-4">
 				        		<label for="divisionCustomerCode" class="form-label">Source Customer Code</label >
@@ -157,15 +220,15 @@
 		        		</div>
 		        		<div class="row">
 				        	<div class="col">
-				        		<label for="ownerFirstName" class="form-label">Owner First Name</label >
+				        		<label for="ownerFirstName" class="form-label">First Name</label >
 			                    <input type="text" name="customerTO.ownerFirstName" id="ownerFirstName" class="form-control" th:value="${customer.ownerFirstName}" th:readonly="${!isUpdate}" readonly required>
 				        	</div >
 				        	<div class="col-3">
-				        		<label for="ownerMiddleName" class="form-label">Owner Middle Name</label >
+				        		<label for="ownerMiddleName" class="form-label">Middle Name</label >
 			                    <input type="text" name="customerTO.ownerMiddleName" id="ownerMiddleName" class="form-control" th:value="${customer.ownerMiddleName}" th:readonly="${!isUpdate}" readonly required>
 				        	</div >
 				        	<div class="col">
-				        		<label for="ownerLastName" class="form-label">Owner Last Name</label >
+				        		<label for="ownerLastName" class="form-label">Last Name</label >
 			                    <input type="text" name="customerTO.ownerLastName" id="ownerLastName" class="form-control" th:value="${customer.ownerLastName}" th:readonly="${!isUpdate}" readonly required>
 				        	</div >
 		        		</div>
@@ -173,6 +236,14 @@
 				        	<div class="col">
 				        		<label for="emailAddress" class="form-label">Email Address</label >
 			                    <input type="text" name="customerTO.emailAddress" id="emailAddress" class="form-control" th:value="${customer.emailAddress}" th:readonly="${!isUpdate}" readonly required>
+				        	</div >
+				        	<div class="col">
+				        		<label for="customerStatus" class="form-label">Customer Status</label >
+			                    <!--<input type="text" name="customerTO.customerStatus" id="customerStatus" class="form-control" th:value="${customer.customerStatusDescription}" th:readonly="${!isUpdate}" readonly>-->
+			                    <select id="customerStatus" class="form-select form-control" th:name="customerTO.customerStatus" name="customerStatus" aria-label="CustomerStatusSelect"  th:disabled="${!isUpdate}" required>
+									<option th:value="'10'" th:text="ACTIVE" th:selected="${customer.customerStatus == '10'}"></option>
+									<option th:value="'20'" th:text="INACTIVE" th:selected="${customer.customerStatus == '20'}"></option>
+								</select>
 				        	</div >
 				        	<div class="col">
 				        		<label for="assignedUser" class="form-label">Assigned User</label >
@@ -201,7 +272,81 @@
 	                    <input type="text" name="customerTO.coordinateY" id="coordinateY" class="form-control digits" th:value="${customer.coordinateY}" th:readonly="${!isUpdate}" readonly required>
 					</div>
 				</div>
-		        <th:block  th:if="${isUpdate}">
+				<hr>
+				<div class="row">
+					<div class="col">
+		        		<label for="mayorPermitNo" class="form-label">Mayor Permit No.</label >
+	                    <input type="text" name="customerTO.mayorPermitNo" id="mayorPermitNo" class="form-control" th:value="${customer.mayorPermitNo}" th:readonly="${!isUpdate}" readonly >
+		        	</div >
+		        	<div class="col">
+		        		<label for="mayorPermitExpDate" class="form-label">Mayor Permit Expiration Date</label >
+	                    <input type="date" name="customerTO.mayorPermitExpDate" id="mayorPermitExpDate" class="form-control" 
+	                    	th:classappend="${customer.mayorPermitExpDate < #temporals.createToday()  ? 'is-invalid' : ''}" 
+	                    	th:value="${customer.mayorPermitExpDate}" th:readonly="${!isUpdate}" readonly>
+	                    <div class="invalid-feedback">
+							Expired
+					    </div>
+		        	</div >
+				</div>
+		        <div class="row">
+					<div class="col">
+		        		<label for="ltoFdaNo" class="form-label">LTO/FDA No.</label >
+	                    <input type="text" name="customerTO.ltoFdaNo" id="ltoFdaNo" class="form-control" th:value="${customer.ltoFdaNo}" th:readonly="${!isUpdate}" readonly >
+		        	</div >
+		        	<div class="col">
+		        		<label for="ltoFdaExpDate" class="form-label">LTO/FDA Expiration Date</label >
+	                    <input type="date" name="customerTO.ltoFdaExpDate" id="ltoFdaExpDate" class="form-control" 
+	                    	th:classappend="${customer.ltoFdaExpDate < #temporals.createToday()  ? 'is-invalid' : ''}" 
+	                    	th:value="${customer.ltoFdaExpDate}" th:readonly="${!isUpdate}" readonly>
+			        	<div class="invalid-feedback">
+							Expired
+					    </div>
+		        	</div >
+				</div>
+		        <div class="row">
+					<div class="col">
+		        		<label for="dtiNo" class="form-label">DTI No.</label >
+	                    <input type="text" name="customerTO.dtiNo" id="dtiNo" class="form-control" th:value="${customer.dtiNo}" th:readonly="${!isUpdate}" readonly >
+		        	</div >
+		        	<div class="col">
+		        		<label for="dtiExpDate" class="form-label">DTI Expiration Date</label >
+	                    <input type="date" name="customerTO.dtiExpDate" id="dtiExpDate" class="form-control" 
+	                    	th:classappend="${customer.dtiExpDate < #temporals.createToday()  ? 'is-invalid' : ''}" 
+	                    	th:value="${customer.dtiExpDate}" th:readonly="${!isUpdate}" readonly>
+			        	<div class="invalid-feedback">
+							Expired
+					    </div>
+		        	</div >
+				</div>
+		        <div class="row">
+					<div class="col">
+		        		<label for="birOcn" class="form-label">(2303) BIR Registration No.</label >
+	                    <input type="text" name="customerTO.birOcn" id="birOcn" class="form-control" th:value="${customer.birOcn}" readonly >
+		        	</div >
+		        	<div class="col">
+		        		<label for="birRegDate" class="form-label">(2303) BIR Registration Date</label >
+	                    <input type="date" name="customerTO.birRegDate" id="birRegDate" class="form-control" 
+	                    	th:value="${customer.birRegDate}" placeholder="mm/dd/yyyy" readonly>
+		        	</div >
+				</div>
+				<hr>
+		        <div class="row">
+		        	<div class="col">
+		        		<label for="remarks" class="form-label">Remarks</label >
+	                    <textarea name="customerTO.remarks" id="remarks" class="form-control" style="height:100px;" th:text="${customer.remarks}" th:readonly="${!isUpdate}" readonly></textarea>
+		        	</div >
+				</div>
+				<div th:if="${isUpdate}">
+		 			<hr>
+		 			<h5>Store Photo</h5>
+		 			<br>
+		 			<div class="row">
+		 				<div class="col-auto">
+				 			<input type="file" name="storeImage" class="form-control" accept="image/png, image/jpeg, image/jpg">
+		 				</div>
+		 			</div>
+	 			</div>
+		        <th:block th:if="${isUpdate}">
 					<hr>
 		        	<div class="d-flex">
 				        <div class="me-auto">

@@ -1,5 +1,6 @@
 package com.soses.audit.service.customer.impl;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 
 import org.slf4j.Logger;
@@ -7,11 +8,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.soses.audit.api.customer.BaseCustomerResponse;
 import com.soses.audit.api.customer.CustomerDetailsRequest;
 import com.soses.audit.api.customer.CustomerDetailsResponse;
 import com.soses.audit.bo.CustomerBO;
+import com.soses.audit.common.FlatFileService;
+import com.soses.audit.common.StringUtil;
 import com.soses.audit.dto.CustomerTO;
 import com.soses.audit.entity.Customer;
 import com.soses.audit.entity.User;
@@ -34,12 +38,15 @@ public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 	
 	private CustomerRepository customerRepo;
 	
+	private FlatFileService flatFileService;
+	
 	public CustomerDetailsServiceImpl(CustomerBO customerBO, UserService userService
-			, CustomerRepository customerRepo) {
+			, CustomerRepository customerRepo, FlatFileService flatFileService) {
 		super();
 		this.customerBO = customerBO;
 		this.userService = userService;
 		this.customerRepo = customerRepo;
+		this.flatFileService = flatFileService;
 	}
 	
 	@Override
@@ -66,7 +73,6 @@ public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 
 		} catch (Exception ex) {
 			log.error(ex.getMessage());
-			//ex.printStackTrace();
 		}
 		return response;
 	}
@@ -80,18 +86,17 @@ public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 			Customer customer = CustomerTransformerUtil.transformCustomerDetailsRequest(request.getCustomerTO());
 			
 			// Upload photo
-//			String fileName = null;
-//			MultipartFile file = request.getFile();
-//			if (file != null && !StringUtil.isEmpty(file.getOriginalFilename())) {
-//				try {
-//					fileName = flatFileService.uploadEmployeePhoto(file, employeeId);
-//					employee.setPhoto(fileName);
-//				} catch (IOException e) {
-//					e.printStackTrace();
-//					log.error(e.getMessage());
-//				}
-//			}
-			
+			String fileName = null;
+			MultipartFile file = request.getStoreImage();
+			if (file != null && !StringUtil.isEmpty(file.getOriginalFilename())) {
+				try {
+					fileName = flatFileService.uploadStorePhoto(file, customer);
+					customer.setStorePhoto(fileName);
+				} catch (IOException e) {
+					e.printStackTrace();
+					log.error(e.getMessage());
+				}
+			}
 			customer.setLastChangedTimestamp(LocalDateTime.now());
 			customerRepo.save(customer);
 			

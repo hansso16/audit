@@ -25,9 +25,11 @@ import com.soses.audit.dto.CustomerAddressTO;
 import com.soses.audit.dto.CustomerTO;
 import com.soses.audit.entity.CustomerAddress;
 import com.soses.audit.entity.CustomerAddressHistory;
+import com.soses.audit.entity.User;
 import com.soses.audit.repository.CustomerAddressHistoryRepository;
 import com.soses.audit.repository.CustomerAddressRepository;
 import com.soses.audit.service.customer.BaseCustomerService;
+import com.soses.audit.service.user.UserService;
 import com.soses.audit.util.CustomerAddressTransformerUtil;
 
 import jakarta.transaction.Transactional;
@@ -53,10 +55,12 @@ public class CustomerAddressServiceImpl implements BaseCustomerService {
 	
 	private MunicipalCacheService  municipalCache;
 	
+	private UserService userService;
+	
 	public CustomerAddressServiceImpl(CustomerBO customerBO, CustomerAddressRepository customerAddressRepo
 			, CustomerAddressBO customerAddressBO, RegionCacheService regionCache
 			, ProvinceCacheService provinceCache, MunicipalCacheService  municipalCache
-			, CustomerAddressHistoryRepository customerAddressHistoryRepo) {
+			, CustomerAddressHistoryRepository customerAddressHistoryRepo, UserService userService) {
 		super();
 		this.customerBO = customerBO;
 		this.customerAddressBO = customerAddressBO;
@@ -65,6 +69,7 @@ public class CustomerAddressServiceImpl implements BaseCustomerService {
 		this.regionCache = regionCache;
 		this.provinceCache = provinceCache;
 		this.municipalCache = municipalCache;
+		this.userService = userService;
 	}
 	
 	@Override
@@ -126,8 +131,11 @@ public class CustomerAddressServiceImpl implements BaseCustomerService {
 					CustomerAddressHistory customerAddressHistory = CustomerAddressHelper.convertToCustomerAddressHistory(dbCustomerAddress);
 					
 					String username = SecurityContextHolder.getContext().getAuthentication().getName();
-					customerAddressHistory.setUserCode(username);
-					reqCustomerAddress.setUserCode(username);
+					User user = userService.retrieveUserDetailsByUsername(username);
+					if (user == null) {
+						throw new Exception("Invalid Authenticated User: " + username);
+					}
+					reqCustomerAddress.setUserCode(user.getUserCode());
 					reqCustomerAddress.setEntryTimestamp(LocalDateTime.now());
 					
 					customerAddressHistoryList.add(customerAddressHistory);

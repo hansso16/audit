@@ -13,9 +13,11 @@ import com.soses.audit.api.customer.CustomerProfileResponse;
 import com.soses.audit.bo.CustomerAddressBO;
 import com.soses.audit.bo.CustomerBO;
 import com.soses.audit.bo.CustomerPhoneBO;
+import com.soses.audit.common.GeneralUtil;
 import com.soses.audit.dto.CustomerAddressTO;
 import com.soses.audit.dto.CustomerPhoneTO;
 import com.soses.audit.dto.CustomerTO;
+import com.soses.audit.dto.UserTO;
 import com.soses.audit.entity.User;
 import com.soses.audit.service.customer.BaseCustomerService;
 import com.soses.audit.service.user.UserService;
@@ -84,6 +86,12 @@ public class CustomerProfileServiceImpl implements BaseCustomerService {
 				// add warning message? but no error
 			}
 			response.setCustomerAddressList(customerAddressList);
+			
+			List<UserTO> userList = userService.retrieveActiveUsers();
+			if (GeneralUtil.isListEmpty(userList)) {
+				// error
+			}
+			response.setUserList(userList);
 		} catch (Exception ex) {
 			log.error(ex.getMessage());
 			//ex.printStackTrace();

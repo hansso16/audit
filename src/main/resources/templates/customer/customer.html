@@ -32,11 +32,8 @@
 			            <li class="nav-item me-auto" th:if="${res.customerTO.assignedUsername==#authentication.getPrincipal().getUsername() || #authorization.expression('hasRole(''SUPV'')')}">
 			                <a class="nav-link" th:classappend="${#ctx.springRequestContext.requestUri.endsWith('phone') ? 'active disabled' : ''}" href="#" th:href="@{/customer/} + ${res.customerCode} + @{/phone}" th:text="Phone">Phone Number</a>
 			            </li>
-			            <!--<li class="nav-item me-auto" th:if="${res.customerTO.assignedUsername==#authentication.getPrincipal().getUsername() || #authorization.expression('hasRole(''SUPV'')')}">
-			                <a class="nav-link" th:classappend="${#ctx.springRequestContext.requestUri.endsWith('activity') ? 'active disabled' : ''}" href="#" th:href="@{/customer/} + ${res.customerCode} + @{/activity}" th:text="Activity">Activity</a>
-			            </li>-->
-			            <li class="nav-item" th:if="${#ctx.springRequestContext.requestUri.endsWith('details')}" sec:authorize="hasRole('SUPV')">
-			                <a class="nav-link" href="#" th:href="@{#ctx.springRequestContext.requestUri} + @{?isUpdate=true}">TODO: Assign Customer</a>
+			            <li class="nav-item" th:if="${#ctx.springRequestContext.requestUri.endsWith('profile')}" sec:authorize="hasRole('SUPV')">
+			                <a class="nav-link" id="assignButton" data-bs-toggle="modal" data-bs-target="#assignModal" href="#">Assign User</a>
 			            </li>
 			            <li class="nav-item" th:if="${!#ctx.springRequestContext.requestUri.endsWith('profile') && !isUpdate}" sec:authorize="hasRole('STAFF')">
 			                <a class="nav-link" href="#" th:href="@{${#ctx.springRequestContext.requestUri}} + @{?isUpdate=true}">Update</a>
@@ -52,6 +49,32 @@
 			    	</div >
 			        <th:block><div th:replace="~{customer/customer_fragment :: ${viewType}}"></div></th:block>
 			    </div>
+			    
+			    <div class="modal fade" id="assignModal" tabindex="-1" aria-labelledby="assignModalLabel" aria-hidden="true" th:if="${viewType}==1" sec:authorize="hasRole('ROLE_SUPV')">
+				   <div class="modal-dialog">
+				      <div class="modal-content">
+				         <div class="modal-header">
+				            <h5 class="modal-title" id="exampleModalLabel">Assign User</h5>
+				            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				         </div>
+				         <form action="#" th:action="@{/customer/} + ${res.customerCode} + @{/assign}" method="POST" id="assignForm">
+				            <div class="modal-body">
+				               <div class="col">
+					        		<label for="user" class="form-label">User</label >
+				                    <select id="user" class="form-select form-control" aria-label="UserSelect" name="userCode" required>
+										<option></option>
+										<option th:each="user : ${res.userList}" th:value="${user.userCode}" th:text="${user.username} + ' - ' + ${user.role.roleCode}" >User</option>
+									</select>
+					        	</div>
+				            </div>
+				            <div class="modal-footer">
+				               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+				               <button type="submit" class="btn btn-warning">Update</button>
+				            </div>
+				         </form>
+				      </div>
+				   </div>
+				</div>
 			</div>
 		</div>
 		
@@ -59,12 +82,9 @@
 		<script th:if="${viewType} == 1 or ${viewType} == 3 or ${viewType} == 41" type="text/javascript" th:src="@{/js/public/jquery-3.6.0.min.js}"></script>
 		<th:block th:replace="~{template :: scripts}"></th:block>
 		<script th:if="${viewType} == 1" type="text/javascript" th:src="@{/js/customer/customer_profile.js}"></script>
+		<script th:if="${viewType} == 1" type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCnhjMsukDP68JzroqhgQubksof8OUf400"></script>
 		<script th:if="${viewType} == 3" type="text/javascript" th:src="@{/js/customer/customer_address.js}"></script>
 		<script th:if="${viewType} == 41" type="text/javascript" th:src="@{/js/customer/customer_phone_add.js}"></script>
-		<script th:if="${viewType} == 9" type="text/javascript" th:src="@{/js/customer/employee_info.js}"></script>
-		<script th:if="${viewType} == 9" type="text/javascript" th:src="@{/js/customer/employee_benefits.js}"></script>
-		<script th:if="${viewType} == 1" type="text/javascript"
-        	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCnhjMsukDP68JzroqhgQubksof8OUf400"></script>
 		<script th:inline="javascript">
 			var customerId = /*[[${res.customerId}]]*/ '';
 		</script >

@@ -35,4 +35,8 @@ public class GeneralUtil {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("LLL dd, yyyy hh:mm a"); 
 		return LocalDateTime.parse(dateTime, formatter);
 	}
+	
+	public static LocalDate stringToLocalDate(String date) {
+		return LocalDate.parse(date, dateFormatter);
+	}
 }

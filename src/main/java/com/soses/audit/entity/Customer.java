@@ -4,6 +4,7 @@ package com.soses.audit.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -20,9 +21,8 @@ import jakarta.persistence.Table;
 @Table(name="customer", indexes={@Index(name="customer_CUSTOMER_CODE_IX", columnList="CUSTOMER_CODE", unique=true)})
 public class Customer implements Serializable {
 
-	private static final long serialVersionUID = -2377676947845095083L;
+	private static final long serialVersionUID = 1405504801386321243L;
 
-	/** Primary key. */
     protected static final String PK = "customerId";
 
     @Id
@@ -43,17 +43,39 @@ public class Customer implements Serializable {
     private String ownerLastName;
     @Column(name="EMAIL_ADDRESS", length=50)
     private String emailAddress;
+    @Column(name="CUSTOMER_STATUS", length=2)
+    private String customerStatus;
     @Column(name="COORDINATE_X", precision=10, scale=6)
     private BigDecimal coordinateX;
     @Column(name="COORDINATE_Y", precision=10, scale=6)
     private BigDecimal coordinateY;
-    @Column(name="ASSIGNED_USER", length=10)
+    @Column(name="ASSIGNED_USER", length=20)
     private String assignedUser;
+    @Column(name="MAYOR_PERMIT_NO", length=20)
+    private String mayorPermitNo;
+    @Column(name="MAYOR_PERMIT_EXP_DATE")
+    private LocalDate mayorPermitExpDate;
+    @Column(name="LTO_FDA_NO", length=20)
+    private String ltoFdaNo;
+    @Column(name="LTO_FDA_EXP_DATE")
+    private LocalDate ltoFdaExpDate;
+    @Column(name="DTI_NO", length=20)
+    private String dtiNo;
+    @Column(name="DTI_EXP_DATE")
+    private LocalDate dtiExpDate;
+    @Column(name="BIR_OCN", length=20)
+    private String birOcn;
+    @Column(name="BIR_REG_DATE")
+    private LocalDate birRegDate;
+    @Column(name="STORE_PHOTO", length=20)
+    private String storePhoto;
+    @Column(name="REMARKS", length=100)
+    private String remarks;
     @Column(name="ENTRY_TIMESTAMP")
     private LocalDateTime entryTimestamp;
     @Column(name="LAST_CHANGED_TIMESTAMP")
     private LocalDateTime lastChangedTimestamp;
-    @Column(name="LAST_CHANGED_USER", length=10)
+    @Column(name="LAST_CHANGED_USER", length=20)
     private String lastChangedUser;
 
     /** Default constructor. */
@@ -206,6 +228,24 @@ public class Customer implements Serializable {
     }
 
     /**
+     * Access method for customerStatus.
+     *
+     * @return the current value of customerStatus
+     */
+    public String getCustomerStatus() {
+        return customerStatus;
+    }
+
+    /**
+     * Setter method for customerStatus.
+     *
+     * @param aCustomerStatus the new value for customerStatus
+     */
+    public void setCustomerStatus(String aCustomerStatus) {
+        customerStatus = aCustomerStatus;
+    }
+
+    /**
      * Access method for coordinateX.
      *
      * @return the current value of coordinateX
@@ -257,6 +297,186 @@ public class Customer implements Serializable {
      */
     public void setAssignedUser(String aAssignedUser) {
         assignedUser = aAssignedUser;
+    }
+
+    /**
+     * Access method for mayorPermitNo.
+     *
+     * @return the current value of mayorPermitNo
+     */
+    public String getMayorPermitNo() {
+        return mayorPermitNo;
+    }
+
+    /**
+     * Setter method for mayorPermitNo.
+     *
+     * @param aMayorPermitNo the new value for mayorPermitNo
+     */
+    public void setMayorPermitNo(String aMayorPermitNo) {
+        mayorPermitNo = aMayorPermitNo;
+    }
+
+    /**
+     * Access method for mayorPermitExpDate.
+     *
+     * @return the current value of mayorPermitExpDate
+     */
+    public LocalDate getMayorPermitExpDate() {
+        return mayorPermitExpDate;
+    }
+
+    /**
+     * Setter method for mayorPermitExpDate.
+     *
+     * @param aMayorPermitExpDate the new value for mayorPermitExpDate
+     */
+    public void setMayorPermitExpDate(LocalDate aMayorPermitExpDate) {
+        mayorPermitExpDate = aMayorPermitExpDate;
+    }
+
+    /**
+     * Access method for ltoFdaNo.
+     *
+     * @return the current value of ltoFdaNo
+     */
+    public String getLtoFdaNo() {
+        return ltoFdaNo;
+    }
+
+    /**
+     * Setter method for ltoFdaNo.
+     *
+     * @param aLtoFdaNo the new value for ltoFdaNo
+     */
+    public void setLtoFdaNo(String aLtoFdaNo) {
+        ltoFdaNo = aLtoFdaNo;
+    }
+
+    /**
+     * Access method for ltoFdaExpDate.
+     *
+     * @return the current value of ltoFdaExpDate
+     */
+    public LocalDate getLtoFdaExpDate() {
+        return ltoFdaExpDate;
+    }
+
+    /**
+     * Setter method for ltoFdaExpDate.
+     *
+     * @param aLtoFdaExpDate the new value for ltoFdaExpDate
+     */
+    public void setLtoFdaExpDate(LocalDate aLtoFdaExpDate) {
+        ltoFdaExpDate = aLtoFdaExpDate;
+    }
+
+    /**
+     * Access method for dtiNo.
+     *
+     * @return the current value of dtiNo
+     */
+    public String getDtiNo() {
+        return dtiNo;
+    }
+
+    /**
+     * Setter method for dtiNo.
+     *
+     * @param aDtiNo the new value for dtiNo
+     */
+    public void setDtiNo(String aDtiNo) {
+        dtiNo = aDtiNo;
+    }
+
+    /**
+     * Access method for dtiExpDate.
+     *
+     * @return the current value of dtiExpDate
+     */
+    public LocalDate getDtiExpDate() {
+        return dtiExpDate;
+    }
+
+    /**
+     * Setter method for dtiExpDate.
+     *
+     * @param aDtiExpDate the new value for dtiExpDate
+     */
+    public void setDtiExpDate(LocalDate aDtiExpDate) {
+        dtiExpDate = aDtiExpDate;
+    }
+
+    /**
+     * Access method for birOcn.
+     *
+     * @return the current value of birOcn
+     */
+    public String getBirOcn() {
+        return birOcn;
+    }
+
+    /**
+     * Setter method for birOcn.
+     *
+     * @param aBirOcn the new value for birOcn
+     */
+    public void setBirOcn(String aBirOcn) {
+        birOcn = aBirOcn;
+    }
+
+    /**
+     * Access method for birRegDate.
+     *
+     * @return the current value of birRegDate
+     */
+    public LocalDate getBirRegDate() {
+        return birRegDate;
+    }
+
+    /**
+     * Setter method for birRegDate.
+     *
+     * @param aBirRegDate the new value for birRegDate
+     */
+    public void setBirRegDate(LocalDate aBirRegDate) {
+        birRegDate = aBirRegDate;
+    }
+
+    /**
+     * Access method for storePhoto.
+     *
+     * @return the current value of storePhoto
+     */
+    public String getStorePhoto() {
+        return storePhoto;
+    }
+
+    /**
+     * Setter method for storePhoto.
+     *
+     * @param aStorePhoto the new value for storePhoto
+     */
+    public void setStorePhoto(String aStorePhoto) {
+        storePhoto = aStorePhoto;
+    }
+
+    /**
+     * Access method for remarks.
+     *
+     * @return the current value of remarks
+     */
+    public String getRemarks() {
+        return remarks;
+    }
+
+    /**
+     * Setter method for remarks.
+     *
+     * @param aRemarks the new value for remarks
+     */
+    public void setRemarks(String aRemarks) {
+        remarks = aRemarks;
     }
 
     /**
@@ -359,18 +579,19 @@ public class Customer implements Serializable {
         return result;
     }
 
-    /**
-     * Returns a debug-friendly String representation of this instance.
-     *
-     * @return String representation of this instance
-     */
     @Override
-    public String toString() {
-        StringBuffer sb = new StringBuffer("[Customer |");
-        sb.append(" customerId=").append(getCustomerId());
-        sb.append("]");
-        return sb.toString();
-    }
+	public String toString() {
+		return "Customer [customerId=" + customerId + ", customerCode=" + customerCode + ", divisionCustomerCode="
+				+ divisionCustomerCode + ", storeName=" + storeName + ", ownerFirstName=" + ownerFirstName
+				+ ", ownerMiddleName=" + ownerMiddleName + ", ownerLastName=" + ownerLastName + ", emailAddress="
+				+ emailAddress + ", customerStatus=" + customerStatus + ", coordinateX=" + coordinateX
+				+ ", coordinateY=" + coordinateY + ", assignedUser=" + assignedUser + ", mayorPermitNo=" + mayorPermitNo
+				+ ", mayorPermitExpDate=" + mayorPermitExpDate + ", ltoFdaNo=" + ltoFdaNo + ", ltoFdaExpDate="
+				+ ltoFdaExpDate + ", dtiNo=" + dtiNo + ", dtiExpDate=" + dtiExpDate + ", birOcn=" + birOcn
+				+ ", birRegDate=" + birRegDate + ", storePhoto=" + storePhoto + ", remarks=" + remarks
+				+ ", entryTimestamp=" + entryTimestamp + ", lastChangedTimestamp=" + lastChangedTimestamp
+				+ ", lastChangedUser=" + lastChangedUser + "]";
+	}
 
     /**
      * Return all elements of the primary key.

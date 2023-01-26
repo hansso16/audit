@@ -1,6 +1,7 @@
 package com.soses.audit.repository;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,9 +23,10 @@ public interface UserRepository extends JpaRepository<User, String> {
 	
 	boolean existsById(String username);
 	
+	List<User> findByTerminationDateIsNull();
+	
 	@Modifying
 	@Query("UPDATE user u SET u.terminationDate = :terminationDate WHERE u.username = :username")
-	
 	void terminateUser(@Param("terminationDate") LocalDate terminationDate, @Param("username") String username);
 
 	@Modifying

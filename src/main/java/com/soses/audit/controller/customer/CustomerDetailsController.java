@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.soses.audit.api.customer.BaseCustomerResponse;
 import com.soses.audit.api.customer.CustomerDetailsRequest;
@@ -51,15 +53,18 @@ public class CustomerDetailsController {
 	}
 	
 	@PostMapping(value="/{customerCode}/details")
-	public String updateCustomer(@PathVariable String customerCode, CustomerDetailsRequest request, Model model) {
+	public RedirectView updateCustomer(@PathVariable String customerCode, CustomerDetailsRequest request, Model model
+			, RedirectAttributes redirectAttrs) {
 		
 		log.info("Request: " + request.toString());
+		String redirectUrl="/customer/" + customerCode + "/details";
+		RedirectView redirectView = new RedirectView(redirectUrl, true);
+		redirectView.setExposeModelAttributes(false);
 		if (customerService.updateCustomerDetails(request)) {
-			model.addAttribute(GlobalConstants.SUCCESS_MESSAGE, "Successfully updated customer details.");
+			redirectAttrs.addFlashAttribute(GlobalConstants.SUCCESS_MESSAGE, "Successfully updated customer details.");
 		} else {
-			model.addAttribute(GlobalConstants.ERROR_MESSAGE, GlobalConstants.GENERIC_ERROR_MESSAGE_DESC);
+			redirectAttrs.addFlashAttribute(GlobalConstants.ERROR_MESSAGE, GlobalConstants.GENERIC_ERROR_MESSAGE_DESC);
 		}
-		
-		return getEmployee(customerCode, model, false);
+		return redirectView;
 	}
 }

@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<HTML lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<th:block th:replace="~{template :: headfiles}"></th:block>
+	</head>
+	<body>
+		<th:block th:replace="~{template :: menu}"></th:block >
+		<br>
+		<div class="container">
+			<div th:if="${errorMessage != null && !#strings.isEmpty(errorMessage)}" class="alert alert-danger alert-dismissible fade show" role="alert">
+			  	<span th:text="${errorMessage}"></span >
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
+			<form action="#" th:action="@{/user/add}" method="POST" autocomplete="off" id="userRegistrationForm" onsubmit="return validatePassword();">
+				<div class="card mb-4">
+				 	<h4 class="card-header">Add New User</h4>
+			 		<div class="card-body">
+			 			<h5>User Details</h5>
+				        <div class="row mb-2">
+				        	<div class="col">
+				        		<label for="username" class="form-label">Username</label >
+			                    <input type="text" name="username" id="username" class="form-control" maxlength="16" required>
+				        	</div>
+				        	<div class="col">
+				        		<label for="role" class="form-label">Access Level</label >
+			                    <select id="role" class="form-select form-control" aria-label="RoleSelect" name="roleId" required>
+									<option></option>
+									<option th:each="role : ${roleList}" th:value="${role.roleId}" 
+										th:text="${role.roleName}">Role</option>
+								</select>
+				        	</div>
+				        </div>
+				        <div class="row">
+							<div class="col-4">
+				        		<label for="password" class="form-label">Password</label >
+			                    <input type="password" name="password" id="password" class="form-control" required maxlength="16"
+			                  		pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}" 
+			                  		title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">
+				        	</div>			        
+				        </div>
+				        <div class="row">
+							<div class="col-4">
+				        		<label for="passwordConfirmation" class="form-label">Confirm Password</label >
+			                    <input type="password" name="passwordConfirmation" id="passwordConfirmation" class="form-control" required maxlength="16"
+			                  		pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}" 
+			                  		title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">
+				        	</div>			        
+				        </div>
+				        <div class="row" id="passwordError">
+		               </div>
+			 			<br>
+			 			<hr>
+					    <input class="btn btn-primary" type="submit" value="Submit">
+						<input class="btn btn-secondary" type="reset" value="Reset">
+				 	</div> 
+				</div>
+			</form >
+		</div>
+		<th:block th:replace="~{template :: footer}"></th:block >
+		<script type="text/javascript" th:src="@{/js/public/jquery-3.6.0.min.js}"></script>
+		<th:block th:replace="~{template :: scripts}"></th:block>
+		<script th:inline="javascript">
+		
+			//var regularExpression = /^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+			function validatePassword() {
+			    var password1 = $('#password').val();
+			    var password2 = $('#passwordConfirmation').val();
+			    $('#passwordError').empty();
+			    if(password1 != password2) {
+					var passwordError = document.getElementById("passwordError");
+					passwordError.innerHTML = "<span style='color: red;'>The password you entered does not match</span>"
+					return false;
+				}
+			}
+		</script >
+	</body>
+</HTML>

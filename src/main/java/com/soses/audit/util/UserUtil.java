@@ -14,6 +14,7 @@ public class UserUtil {
 		userTO.setTerminationDate(user.getTerminationDate());
 		userTO.setUserCode(user.getUserCode());
 		userTO.setUsername(user.getUsername());
+		userTO.setLastChangedTimestamp(user.getLastChangedTimestamp());
 		return userTO;
 	}
 }

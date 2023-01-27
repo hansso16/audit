@@ -14,6 +14,14 @@ public class UserTO {
     private LocalDate terminationDate;
     private Role role;
     private String lastChangedUser;
+    private LocalDateTime lastChangedTimestamp;
+    
+	public LocalDateTime getLastChangedTimestamp() {
+		return lastChangedTimestamp;
+	}
+	public void setLastChangedTimestamp(LocalDateTime lastChangedTimestamp) {
+		this.lastChangedTimestamp = lastChangedTimestamp;
+	}
 	public String getUserCode() {
 		return userCode;
 	}
@@ -60,7 +68,7 @@ public class UserTO {
 	public String toString() {
 		return "UserTO [userCode=" + userCode + ", username=" + username + ", password=" + password
 				+ ", entryTimestamp=" + entryTimestamp + ", terminationDate=" + terminationDate + ", role=" + role
-				+ ", lastChangedUser=" + lastChangedUser + "]";
+				+ ", lastChangedUser=" + lastChangedUser + ", lastChangedTimestamp=" + lastChangedTimestamp + "]";
 	}
     
     

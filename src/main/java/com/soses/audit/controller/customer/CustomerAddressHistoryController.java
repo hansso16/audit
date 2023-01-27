@@ -43,6 +43,7 @@ public class CustomerAddressHistoryController {
 		model.addAttribute("viewType", GlobalConstants.ADDRESS_HISTORY_VIEW_TYPE);
 		if (res!= null) {
 			model.addAttribute("res", res);
+			model.addAttribute("isUpdate", true);
 		}
 		return CUST_PAGE;
 	}

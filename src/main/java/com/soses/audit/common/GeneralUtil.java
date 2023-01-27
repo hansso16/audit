@@ -9,7 +9,7 @@ public class GeneralUtil {
 
 	private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("LLL dd, yyyy");
 	
-	private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("LLL dd, yyyy hh:mm a");
+	private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("LLL dd, yyyy hh:mma");
 
 	public static final LocalDate getCurrentDate() {
 		return LocalDate.now();

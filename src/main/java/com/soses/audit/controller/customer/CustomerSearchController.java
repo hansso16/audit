@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.soses.audit.api.customer.CustomerSearchRequest;
-import com.soses.audit.common.StringUtil;
 import com.soses.audit.controller.BaseSearchController;
 import com.soses.audit.entity.Customer;
 import com.soses.audit.service.customer.CustomerSearchService;
@@ -39,7 +38,8 @@ public class CustomerSearchController extends BaseSearchController {
 		log.info("ENTER searchEntity(request,errors,model): request -> " + request.toString());
 		Page<Customer> customerPage = null;
 		String searchText = request.getSearch();
-		if (!StringUtil.isEmpty(searchText)) {
+//		if (!StringUtil.isEmpty(searchText)) {
+		if (searchText != null) {
 			customerPage = customerSearchService.searchCustomer(request);
 			if (customerPage != null) {
 				setPaginationVariables(customerPage, model);

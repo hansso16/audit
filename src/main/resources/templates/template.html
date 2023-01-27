@@ -31,20 +31,21 @@
 					         	</a>
 					  			<ul class="dropdown-menu" aria-labelledby="employeeDropdown">
 						            <li><a class="dropdown-item" href="#" th:href="@{/customer}">Search Customer</a></li>
-						            <li><a class="dropdown-item" href="#" th:href="@{/customer/add}">Add Customer</a></li>
+						            <li><a class="dropdown-item" href="#" th:href="@{/customer/add}">Register Customer</a></li>
 						            <!--<li><a class="dropdown-item" href="#">Another action</a></li>
 						            <li><hr class="dropdown-divider"></li>
 						            <li><a class="dropdown-item" href="#">Something else here</a></li>-->
 					        	</ul>
 					        </li>
-					        <!--<li class="nav-item dropdown" sec:authorize="hasAnyRole('ROLE_SUPV')">
+					        <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_SUPV')">
 					         	<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 					            	User Management
 					         	</a>
 					  			<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMgmtDropdown">
-						            <li><a class="dropdown-item" href="#" th:href="@{/user}">Search Users (view and edit roles)</a></li>
+						            <li><a class="dropdown-item" href="#" th:href="@{/user}">Search Users</a></li>
+						            <li><a class="dropdown-item" href="#" th:href="@{/user}">Add User</a></li>
 					        	</ul>
-					        </li>-->
+					        </li>
 				     	</ul>
 						<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 					        

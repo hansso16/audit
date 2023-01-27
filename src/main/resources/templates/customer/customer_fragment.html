@@ -49,11 +49,15 @@
 			                    <input type="text" name="customerStatus" id="customerStatus" class="form-control" th:value="${customer.customerStatusDescription}" readonly>
 				        	</div >
 				        	<div class="col">
-				        		<label for="assignedUser" class="form-label">Assigned User</label >
-			                    <input type="text" name="assignedUser" id="assignedUser" class="form-control" th:value="${customer.assignedUsername}" readonly>
+				        		<label for="salesmanInitials" class="form-label">Salesman Initials</label >
+			                    <input type="text" name="salesmanInitials" id="salesmanInitials" class="form-control" th:value="${customer.salesmanInitials}" readonly>
 				        	</div >
 						</div>
 		        		<div class="row">
+				        	<div class="col">
+				        		<label for="assignedUser" class="form-label">Assigned User</label >
+			                    <input type="text" name="assignedUser" id="assignedUser" class="form-control" th:value="${customer.assignedUsername}" readonly>
+				        	</div >
 				        	<div class="col">
 				        		<label for="lastChangedTimestamp" class="form-label">Last Changed Timestamp</label >
 			                    <input type="text" name="lastChangedTimestamp" id="lastChangedTimestamp" class="form-control digits" th:value="${customer.lastChangedTimestamp}" readonly >
@@ -102,10 +106,10 @@
 		        		<label for="dtiExpDate" class="form-label">DTI Expiration Date</label >
 	                    <input type="text" name="dtiExpDate" id="dtiExpDate" class="form-control" 
 	                    	th:classappend="${customer.dtiExpDate < #temporals.createToday()  ? 'is-invalid' : ''}" th:value="${#temporals.format(customer.dtiExpDate, 'LLLL dd, yyyy')}" readonly>
+			        	<div class="invalid-feedback">
+							Expired
+					    </div>
 		        	</div >
-		        	<div class="invalid-feedback">
-						Expired
-				    </div>
 				</div>
 		        <div class="row">
 					<div class="col">
@@ -246,11 +250,15 @@
 								</select>
 				        	</div >
 				        	<div class="col">
-				        		<label for="assignedUser" class="form-label">Assigned User</label >
-			                    <input type="text" name="customerTO.assignedUsername" id="assignedUser" class="form-control" th:value="${customer.assignedUsername}" readonly required>
+				        		<label for="salesmanInitials" class="form-label">Salesman Initials</label >
+			                    <input type="text" name="customerTO.salesmanInitials" id="salesmanInitials" class="form-control" th:value="${customer.salesmanInitials}" th:readonly="${!isUpdate}" readonly>
 				        	</div >
 						</div>
 		        		<div class="row">
+				        	<div class="col">
+				        		<label for="assignedUser" class="form-label">Assigned User</label >
+			                    <input type="text" name="customerTO.assignedUsername" id="assignedUser" class="form-control" th:value="${customer.assignedUsername}" readonly required>
+				        	</div >
 				        	<div class="col">
 				        		<label for="lastChangedTimestamp" class="form-label">Last Changed Timestamp</label >
 			                    <input type="text" name="customerTO.lastChangedTimestamp" id="lastChangedTimestamp" class="form-control digits" th:value="${customer.lastChangedTimestamp}" readonly required>
@@ -346,18 +354,48 @@
 		 				</div>
 		 			</div>
 	 			</div>
-		        <th:block th:if="${isUpdate}">
-					<hr>
-		        	<div class="d-flex">
-				        <div class="me-auto">
-						        <button class="btn btn-primary" type="submit" id="submitBtn">Save</button >
-						        <button class="btn btn-secondary" type="reset">Reset</button >
-						        <!--<input class="btn btn-secondary" type="reset" value="Reset">-->
-						        <a class="btn btn-secondary" href="#" th:href="@{__${#ctx.springRequestContext.requestUri}__}">Cancel</a>
-				        </div>
-		        	</div>
-		        </th:block >
+				<hr>
+	        	<div class="d-flex">
+			        <div class="me-auto">
+				        <th:block th:if="${isUpdate}">
+					        <button class="btn btn-primary" type="submit" id="submitBtn">Save</button >
+					        <button class="btn btn-secondary" type="reset">Reset</button >
+					        <!--<input class="btn btn-secondary" type="reset" value="Reset">-->
+					        <a class="btn btn-secondary" href="#" th:href="@{__${#ctx.springRequestContext.requestUri}__}">Cancel</a>
+				        </th:block >
+			        </div>
+			        <a class="btn btn-primary" th:if="${!isUpdate}" id="salesmanHistoryBtn" data-bs-toggle="modal" data-bs-target="#salesmanHistoryModal" href="#">Salesman History</a>
+	        	</div>
 			</form >
+        	<div class="modal fade" id="salesmanHistoryModal" tabindex="-1" aria-labelledby="salesmanHistoryModalLabel" aria-hidden="true" th:if="${!isUpdate}">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+				            <h5 class="modal-title" id="exampleModalLabel">Salesman History</h5>
+				            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<table class="table table-striped table-hover">
+								<thead>
+									<tr>
+										<th scope="col">Salesman Initials</th >
+										<th scope="col">Date Changed</th >
+									</tr>
+								</thead>
+								<tbody th:if="${res.customerSalesmanHistoryList != null}">
+									<tr th:each="csh,iter : ${res.customerSalesmanHistoryList}">
+										<td th:text="${csh.salesmanInitials}"></td >
+										<td th:text="${csh.entryTimestamp}"></td >
+									</tr >
+								</tbody >
+							</table>
+			            </div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
 		</tr>
 		
 		<!-- Customer Address-->
@@ -538,7 +576,7 @@
 		        </div>
 		        <div class="row justify-content-center">
 		        	<div class="col-4">
-		        		<a class="btn btn-outline-primary w-100" th:text="'Add Dependent'" id="addPhone" href="#">Add</a>
+		        		<a class="btn btn-outline-primary w-100" th:text="'Add Phone Number'" id="addPhone" href="#">Add</a>
 		        	</div>
 		        </div>
 		        <div>

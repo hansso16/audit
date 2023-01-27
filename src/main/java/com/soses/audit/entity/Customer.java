@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -77,8 +78,18 @@ public class Customer implements Serializable {
     private LocalDateTime lastChangedTimestamp;
     @Column(name="LAST_CHANGED_USER", length=20)
     private String lastChangedUser;
+    @Column(name="SALESMAN_INITIALS", length=10)
+    private String salesmanInitials;
 
-    /** Default constructor. */
+    public String getSalesmanInitials() {
+		return salesmanInitials;
+	}
+
+	public void setSalesmanInitials(String salesmanInitials) {
+		this.salesmanInitials = salesmanInitials;
+	}
+
+	/** Default constructor. */
     public Customer() {
         super();
     }
@@ -533,51 +544,42 @@ public class Customer implements Serializable {
         lastChangedUser = aLastChangedUser;
     }
 
-    /**
-     * Compares the key for this instance with another Customer.
-     *
-     * @param other The object to compare to
-     * @return True if other object is instance of class Customer and the key objects are equal
-     */
-    private boolean equalKeys(Object other) {
-        if (this==other) {
-            return true;
-        }
-        if (!(other instanceof Customer)) {
-            return false;
-        }
-        Customer that = (Customer) other;
-        if (this.getCustomerId() != that.getCustomerId()) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * Compares this instance with another Customer.
-     *
-     * @param other The object to compare to
-     * @return True if the objects are the same
-     */
     @Override
-    public boolean equals(Object other) {
-        if (!(other instanceof Customer)) return false;
-        return this.equalKeys(other) && ((Customer)other).equalKeys(this);
-    }
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Customer other = (Customer) obj;
+		return Objects.equals(assignedUser, other.assignedUser) && Objects.equals(birOcn, other.birOcn)
+				&& Objects.equals(birRegDate, other.birRegDate) && Objects.equals(coordinateX, other.coordinateX)
+				&& Objects.equals(coordinateY, other.coordinateY) && Objects.equals(customerCode, other.customerCode)
+				&& customerId == other.customerId && Objects.equals(customerStatus, other.customerStatus)
+				&& Objects.equals(divisionCustomerCode, other.divisionCustomerCode)
+				&& Objects.equals(dtiExpDate, other.dtiExpDate) && Objects.equals(dtiNo, other.dtiNo)
+				&& Objects.equals(emailAddress, other.emailAddress)
+				&& Objects.equals(entryTimestamp, other.entryTimestamp)
+				&& Objects.equals(lastChangedTimestamp, other.lastChangedTimestamp)
+				&& Objects.equals(lastChangedUser, other.lastChangedUser)
+				&& Objects.equals(ltoFdaExpDate, other.ltoFdaExpDate) && Objects.equals(ltoFdaNo, other.ltoFdaNo)
+				&& Objects.equals(mayorPermitExpDate, other.mayorPermitExpDate)
+				&& Objects.equals(mayorPermitNo, other.mayorPermitNo)
+				&& Objects.equals(ownerFirstName, other.ownerFirstName)
+				&& Objects.equals(ownerLastName, other.ownerLastName)
+				&& Objects.equals(ownerMiddleName, other.ownerMiddleName) && Objects.equals(remarks, other.remarks)
+				&& Objects.equals(salesmanInitials, other.salesmanInitials)
+				&& Objects.equals(storeName, other.storeName) && Objects.equals(storePhoto, other.storePhoto);
+	}
 
-    /**
-     * Returns a hash code for this instance.
-     *
-     * @return Hash code
-     */
     @Override
-    public int hashCode() {
-        int i;
-        int result = 17;
-        i = getCustomerId();
-        result = 37*result + i;
-        return result;
-    }
+	public int hashCode() {
+		return Objects.hash(assignedUser, birOcn, birRegDate, coordinateX, coordinateY, customerCode, customerId,
+				customerStatus, divisionCustomerCode, dtiExpDate, dtiNo, emailAddress, entryTimestamp,
+				lastChangedTimestamp, lastChangedUser, ltoFdaExpDate, ltoFdaNo, mayorPermitExpDate, mayorPermitNo,
+				ownerFirstName, ownerLastName, ownerMiddleName, remarks, salesmanInitials, storeName, storePhoto);
+	}
 
     @Override
 	public String toString() {
@@ -590,7 +592,7 @@ public class Customer implements Serializable {
 				+ ltoFdaExpDate + ", dtiNo=" + dtiNo + ", dtiExpDate=" + dtiExpDate + ", birOcn=" + birOcn
 				+ ", birRegDate=" + birRegDate + ", storePhoto=" + storePhoto + ", remarks=" + remarks
 				+ ", entryTimestamp=" + entryTimestamp + ", lastChangedTimestamp=" + lastChangedTimestamp
-				+ ", lastChangedUser=" + lastChangedUser + "]";
+				+ ", lastChangedUser=" + lastChangedUser + ", salesmanInitials=" + salesmanInitials + "]";
 	}
 
     /**

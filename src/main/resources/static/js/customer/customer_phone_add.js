@@ -4,10 +4,6 @@ $(document).ready(function() {
 	$('#addPhone').on('click', addFields);
 });
 
-setInputFilter(document.getElementByClass("phone"), function(value) {
-  return /^\d*?\d*$/.test(value); // Allow digits and '.' only, using a RegExp
-});
-
 function addFields() {
 	//var lastField = $("#addDependentForm div:last");
     //var intId = (lastField && lastField.length && lastField.data("idx") + 1) || 1;

@@ -2,6 +2,7 @@ package com.soses.audit.service.customer.impl;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,10 +15,14 @@ import com.soses.audit.api.customer.BaseCustomerResponse;
 import com.soses.audit.api.customer.CustomerDetailsRequest;
 import com.soses.audit.api.customer.CustomerDetailsResponse;
 import com.soses.audit.bo.CustomerBO;
+import com.soses.audit.bo.CustomerSalesmanHistoryBO;
 import com.soses.audit.common.FlatFileService;
+import com.soses.audit.common.GeneralUtil;
 import com.soses.audit.common.StringUtil;
+import com.soses.audit.dto.CustomerSalesmanHistoryTO;
 import com.soses.audit.dto.CustomerTO;
 import com.soses.audit.entity.Customer;
+import com.soses.audit.entity.CustomerSalesmanHistory;
 import com.soses.audit.entity.User;
 import com.soses.audit.repository.CustomerRepository;
 import com.soses.audit.service.user.UserService;
@@ -34,6 +39,8 @@ public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 	
 	private CustomerBO customerBO;
 	
+	private CustomerSalesmanHistoryBO customerSalesmanHistoryBO;
+	
 	private UserService userService;
 	
 	private CustomerRepository customerRepo;
@@ -41,12 +48,14 @@ public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 	private FlatFileService flatFileService;
 	
 	public CustomerDetailsServiceImpl(CustomerBO customerBO, UserService userService
-			, CustomerRepository customerRepo, FlatFileService flatFileService) {
+			, CustomerRepository customerRepo, FlatFileService flatFileService
+			, CustomerSalesmanHistoryBO customerSalesmanHistoryBO) {
 		super();
 		this.customerBO = customerBO;
 		this.userService = userService;
 		this.customerRepo = customerRepo;
 		this.flatFileService = flatFileService;
+		this.customerSalesmanHistoryBO = customerSalesmanHistoryBO;
 	}
 	
 	@Override
@@ -70,7 +79,11 @@ public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 				customerDTO.setLastChangedUsername(lastAssignedUser.getUsername());
 			}
 			response.setCustomerTO(customerDTO);
-
+			
+			List<CustomerSalesmanHistoryTO> customerSalesmanHistoryList = customerSalesmanHistoryBO.retrieveCustomerSalesmanHistoryTO(customerDTO.getCustomerId());
+			if (!GeneralUtil.isListEmpty(customerSalesmanHistoryList)) {
+				response.setCustomerSalesmanHistoryList(customerSalesmanHistoryList);
+			}
 		} catch (Exception ex) {
 			log.error(ex.getMessage());
 		}
@@ -79,11 +92,22 @@ public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 
 	@Override
 	public boolean updateCustomerDetails(CustomerDetailsRequest request) {
-
-		//String customerId = request.customer();
+		if (request == null) {return false;}
 		boolean isSuccess = false;
-		if (request != null) {
+		try {
 			Customer customer = CustomerTransformerUtil.transformCustomerDetailsRequest(request.getCustomerTO());
+			String customerCode = customer.getCustomerCode();
+			
+			Customer dbCustomer = customerBO.retrieveCustomerEntity(customerCode);
+			String salesmanInitials = customer.getSalesmanInitials();
+			if (dbCustomer != null && !StringUtil.isEmpty(salesmanInitials) 
+					&& !salesmanInitials.equalsIgnoreCase(dbCustomer.getSalesmanInitials())) {
+				// insert into history
+				CustomerSalesmanHistory csh = new CustomerSalesmanHistory();
+				csh.setCustomerId(dbCustomer.getCustomerId());
+				csh.setSalesmanInitials(dbCustomer.getSalesmanInitials().toUpperCase());
+				csh = customerSalesmanHistoryBO.saveCustomerSalesmanHistory(csh);
+			}
 			
 			// Upload photo
 			String fileName = null;
@@ -99,8 +123,9 @@ public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 			}
 			customer.setLastChangedTimestamp(LocalDateTime.now());
 			customerRepo.save(customer);
-			
 			isSuccess=true;
+		} catch (Exception ex) {
+			log.error(ex.getMessage());
 		}
 		return isSuccess;
 	}

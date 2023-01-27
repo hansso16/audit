@@ -39,6 +39,7 @@ public class CustomerTransformerUtil {
 			customerDTO.setDtiNo(customer.getDtiNo());
 			customerDTO.setBirOcn(customer.getBirOcn());
 			customerDTO.setBirRegDate(customer.getBirRegDate());
+			customerDTO.setSalesmanInitials(customer.getSalesmanInitials());
 		}
 		return customerDTO;
 	}
@@ -48,8 +49,8 @@ public class CustomerTransformerUtil {
 		if (customerTO != null) {
 			customer = new Customer();
 			customer.setCustomerId(customerTO.getCustomerId());
-			customer.setCustomerCode(customerTO.getCustomerCode());
-			customer.setDivisionCustomerCode(customerTO.getDivisionCustomerCode());
+			customer.setCustomerCode(customerTO.getCustomerCode().toUpperCase());
+			customer.setDivisionCustomerCode(customerTO.getDivisionCustomerCode().toUpperCase());
 			customer.setStoreName(customerTO.getStoreName());
 			customer.setOwnerFirstName(customerTO.getOwnerFirstName());
 			customer.setOwnerLastName(customerTO.getOwnerLastName());
@@ -72,6 +73,7 @@ public class CustomerTransformerUtil {
 			customer.setDtiNo(customerTO.getDtiNo());
 			customer.setBirOcn(customerTO.getBirOcn());
 			customer.setBirRegDate(customerTO.getBirRegDate());
+			customer.setSalesmanInitials(customerTO.getSalesmanInitials().toUpperCase());
 		}
 		return customer;
 	}

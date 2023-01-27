@@ -34,7 +34,14 @@ public class CustomerTO {
     private String lastChangedUser;
     private String lastChangedUsername;
     private String assignedUsername;
+    private String salesmanInitials;
     
+	public String getSalesmanInitials() {
+		return salesmanInitials;
+	}
+	public void setSalesmanInitials(String salesmanInitials) {
+		this.salesmanInitials = salesmanInitials;
+	}
 	public String getB64EncodedImg() {
 		return b64EncodedImg;
 	}
@@ -156,7 +163,7 @@ public class CustomerTO {
 				+ ", storePhoto=" + storePhoto + ", b64EncodedImg=" + b64EncodedImg + ", remarks=" + remarks
 				+ ", entryTimestamp=" + entryTimestamp + ", lastChangedTimestamp=" + lastChangedTimestamp
 				+ ", lastChangedUser=" + lastChangedUser + ", lastChangedUsername=" + lastChangedUsername
-				+ ", assignedUsername=" + assignedUsername + "]";
+				+ ", assignedUsername=" + assignedUsername + ", salesmanInitials=" + salesmanInitials + "]";
 	}
 	public String getCustomerStatus() {
 		return customerStatus;

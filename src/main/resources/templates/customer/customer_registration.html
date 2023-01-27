@@ -1,0 +1,360 @@
+<!DOCTYPE HTML>
+<HTML lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<th:block th:replace="~{template :: headfiles}"></th:block>
+	</head>
+	<body>
+		<th:block th:replace="~{template :: menu}"></th:block >
+		<br>
+		<div class="container">
+			<div th:if="${errorMessage != null && !#strings.isEmpty(errorMessage)}" class="alert alert-danger alert-dismissible fade show" role="alert">
+			  	<span th:text="${errorMessage}"></span >
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
+			<form class="" action="#" th:action="@{/customer/add}" method="POST" autocomplete="off" id="customerRegistrationForm" enctype="multipart/form-data">
+				<div class="card mb-4">
+				 	<h4 class="card-header">Register New Customer</h4>
+			 		<div class="card-body">
+			 			<h5>Customer Details</h5>
+			 			<div class="row">
+						    <div class="col-3">
+								<label for="customerCode" class="form-label">Customer Code</label>
+								<input type="text" class="form-control" name="customer.customerCode" id="customerCode" placeholder="" required>
+							</div>
+						    <div class="col-3">
+								<label for="divisionCustomerCode" class="form-label">Source Customer Code</label>
+								<input type="text" class="form-control" name="customer.divisionCustomerCode" id="divisionCustomerCode">
+							</div>
+						    <div class="col">
+								<label for="storeName" class="form-label">Store Name</label>
+								<input type="text" class="form-control" name="customer.storeName" id="storeName" placeholder="SOSE'S MARKETING INCORPORATED ENTERPRISE" required>
+							</div>
+			 			</div>
+			 			<div class="row">
+						    <div class="col">
+								<label for="ownerFirstName" class="form-label">Owner First Name</label>
+								<input type="text" class="form-control" name="customer.ownerFirstName" id="ownerFirstName" placeholder="John" required>
+							</div>
+						    <div class="col-3">
+								<label for="ownerMiddleName" class="form-label">Owner Middle Name</label>
+								<input type="text" class="form-control" name="customer.ownerMiddleName" id="ownerMiddleName" placeholder="Jr.">
+							</div>
+						    <div class="col">
+								<label for="ownerLastName" class="form-label">Owner Last Name</label>
+								<input type="text" class="form-control" name="customer.ownerLastName" id="ownerLastName" placeholder="Smith" required>
+							</div>
+						 </div>
+			 			<div class="row">
+						    <div class="col">
+								<label for="emailAddress" class="form-label">Email Address</label>
+								<input type="email" class="form-control" name="customer.emailAddress" id="emailAddress" placeholder="john@smith.com">
+							</div>
+						    <div class="col">
+								<label for="coordinateX" class="form-label">Coordinate-X</label>
+								<input type="text" class="form-control" name="customer.coordinateX" id="coordinateX" placeholder="123.123456">
+							</div>
+						    <div class="col">
+								<label for="coordinateY" class="form-label">Coordinate-Y</label>
+								<input type="text" class="form-control" name="customer.coordinateY" id="coordinateY" placeholder="123.123456">
+							</div>
+						    <div class="col">
+								<label for="salesmanInitials" class="form-label">Salesman Initials</label>
+								<input type="text" class="form-control" name="customer.salesmanInitials" id="salesmanInitials" placeholder="ABC">
+							</div>
+			 			</div>
+			 			<div class="row">
+							 <div class="col">
+								<label for="mayorPermitNo" class="form-label">Mayor Permit No</label>
+								<input type="text" class="form-control" name="customer.mayorPermitNo" id="mayorPermitNo">
+							</div>
+						    <div class="col">
+								<label for="mayorPermitExpDate" class="form-label">Mayor Permit Expiration Date</label>
+								<input type="date" class="form-control" name="customer.mayorPermitExpDate" id="mayorPermitExpDate">
+							</div>
+						 </div>
+			 			<div class="row">
+							 <div class="col">
+								<label for="ltoFdaNo" class="form-label">LTO/FDA No.</label>
+								<input type="text" class="form-control" name="customer.ltoFdaNo" id="ltoFdaNo" >
+							</div>
+						    <div class="col">
+								<label for="ltoFdaExpDate" class="form-label">LTO/FDA Expiraiton Date</label>
+								<input type="date" class="form-control" name="customer.ltoFdaExpDate" id="ltoFdaExpDate">
+							</div>
+			 			</div>
+			 			<div class="row">
+							<div class="col">
+								<label for="dtiNo" class="form-label">DTI No.</label>
+								<input type="text" class="form-control" name="customer.dtiNo" id="dtiNo" >
+							</div>
+						    <div class="col">
+								<label for="dtiExpDate" class="form-label">DTI Expiration Date</label>
+								<input type="date" class="form-control" name="customer.dtiExpDate" id="dtiExpDate">
+							</div>
+						</div>
+			 			<div class="row">
+							<div class="col">
+								<label for="birOcn" class="form-label">(2303) BIR Registration No</label>
+								<input type="text" id="birOcn" class="form-control" name="customer.birOcn">
+							</div>
+							<div class="col">
+								<label for="birRegDate" class="form-label">(2303) BIR Registration Date</label>
+								<input type="date" class="form-control" name="customer.birRegDate" id="birRegDate">
+							</div>
+						</div>
+						<br>
+			 			<hr>
+			 			<h5>Phone Number(s)</h5>
+			 			<div class="" id="addPhoneForm">
+			 			</div>
+			 			<div class="row justify-content-center">
+				        	<div class="col-4">
+				        		<a class="btn btn-outline-primary w-100" th:text="'Add Phone Number'" id="addPhone">Add</a>
+				        	</div>
+				        </div>
+			 			<br>
+			 			<hr>
+			 			<h5>Address</h5>
+			 			<h6>Delivery Address/Store Location</h6>
+		 				<input type="hidden" th:name="customerAddress[0].id.addressType" name="addressType" th:value="1" value="1" />
+			 			<div class="row">
+						    <div class="col">
+								<label for="region0" class="form-label">Region</label>
+								<select id="region0" class="form-select form-control" aria-label="region0" name="customerAddress[0].region" onchange="deriveAddress(this)" required>
+									<option></option>
+									<option th:each="region : ${regionList}" th:value="${region.regionId}" 
+										th:text="${region.regionName}+' - '+${region.regionDescription}"  >Region</option>
+								</select>
+							</div>
+						    <div class="col">
+								<label for="province0" class="form-label">Province</label>
+								<select id="province0" class="form-select form-control" aria-label="province0" name="customerAddress[0].province" onchange="deriveAddress(this)" required></select>
+								<!--<input type="text" class="form-control" name="customerAddress[0].province" id="presentProvince" required>-->
+							</div>
+						    <div class="col">
+								<label for="municipal0" class="form-label">Municipal/City</label>
+								<!--<input type="text" class="form-control" name="customerAddress[0].city" id="presentCity" required>-->
+								<select id="municipal0" class="form-select form-control" aria-label="municipal0" name="customerAddress[0].municipal" required></select>
+							</div>
+			 			</div>
+			 			<div class="row">
+						    <div class="col">
+								<label for="street0" class="form-label">Street Name & House No.</label>
+								<input type="text" class="form-control" name="customerAddress[0].street" id="street0" required>
+							</div>
+							<div class="col-2">
+								<label for="zipCode0" class="form-label">Zip Code</label>
+								<input type="text" class="form-control" name="customerAddress[0].zipCode" id="zipCode0" required>
+							</div>
+			 			</div>
+			 			<h6 class="mt-2">Purchasing Office Address</h6> 
+			 			<span>Same as Delivery Address? </span><input type="checkbox" id="fillPurchaseOfficeAddress" name="fillPurchaseOfficeAddress" value="1"/>
+			 			<div id="purchaseOfficeAddress">
+				 			<div class="row">
+				 				<input type="hidden" th:name="customerAddress[1].id.addressType" name="addressType" th:value="2" value="2" />
+				 				<div class="col">
+									<label for="region1" class="form-label">Region</label>
+									<select id="region1" class="form-select form-control" aria-label="region1" name="customerAddress[1].region" onchange="deriveAddress(this)" required>
+										<option></option>
+										<option th:each="region : ${regionList}" th:value="${region.regionId}" 
+											th:text="${region.regionName}+' - '+${region.regionDescription}" >Region</option>
+									</select>
+								</div>
+							    <div class="col">
+									<label for="province1" class="form-label">Province</label>
+									<select id="province1" class="form-select form-control" aria-label="province1" name="customerAddress[1].province" onchange="deriveAddress(this)" required></select>
+								</div>
+							    <div class="col">
+									<label for="municipal1" class="form-label">Municipal/City</label>
+									<select id="municipal1" class="form-select form-control" aria-label="municipal1" name="customerAddress[1].municipal" required></select>
+								</div>
+				 			</div>
+				 			<div class="row">
+				 				<div class="col">
+									<label for="street1" class="form-label">House Number/Street Name</label>
+									<input type="text" class="form-control" name="customerAddress[1].street" id="street1" required>
+								</div>
+							    <div class="col-2">
+									<label for="zipCode1" class="form-label">Zip Code</label>
+									<input type="text" class="form-control" name="customerAddress[1].zipCode" id="zipCode1" required>
+								</div>
+				 			</div>
+			 			</div>
+			 			<h6 class="mt-2">Warehouse Address</h6>
+			 			<span>Same as Delivery Address? </span><input type="checkbox" id="fillWarehouseAddress" name="fillWarehouseAddress" value="2" />
+			 			<div id="warehouseAddress">
+				 			<div class="row">
+				 				<input type="hidden" th:name="customerAddress[2].id.addressType" name="addressType" th:value="3" value="3" />
+				 				<div class="col">
+									<label for="region2" class="form-label">Region</label>
+									<select id="region2" class="form-select form-control" aria-label="region2" name="customerAddress[2].region" onchange="deriveAddress(this)" required>
+										<option></option>
+										<option th:each="region : ${regionList}" th:value="${region.regionId}" 
+											th:text="${region.regionName}+' - '+${region.regionDescription}" >Region</option>
+									</select>
+								</div>
+							    <div class="col">
+									<label for="province2" class="form-label">Province</label>
+									<select id="province2" class="form-select form-control" aria-label="province2" name="customerAddress[2].province" onchange="deriveAddress(this)" required></select>
+								</div>
+							    <div class="col">
+									<label for="municipal2" class="form-label">City</label>
+									<select id="municipal2" class="form-select form-control" aria-label="municipal2" name="customerAddress[2].municipal" required></select>
+								</div>
+				 			</div>
+				 			<div class="row">
+							    <div class="col">
+									<label for="street2" class="form-label">House Number/Street Name</label>
+									<input type="text" class="form-control" name="customerAddress[2].street" id="street2" required>
+								</div>
+								<div class="col-2">
+									<label for="zipCode2" class="form-label">Zip Code</label>
+									<input type="text" class="form-control" name="customerAddress[2].zipCode" id="zipCode2" required>
+								</div>
+				 			</div>
+			 			</div>
+			 			<h6 class="mt-2">Owner Address</h6>
+			 			<span>Same as Delivery Address? </span><input type="checkbox" id="fillOwnerAddress" name="fillOwnerAddress" value="3" />
+			 			<div id="ownerAddress">
+				 			<div class="row">
+				 				<input type="hidden" th:name="customerAddress[3].id.addressType" name="addressType" th:value="4" value="4" />
+				 				<div class="col">
+									<label for="region3" class="form-label">Region</label>
+									<select id="region3" class="form-select form-control" aria-label="region3" name="customerAddress[3].region" onchange="deriveAddress(this)" required>
+										<option></option>
+										<option th:each="region : ${regionList}" th:value="${region.regionId}" 
+											th:text="${region.regionName}+' - '+${region.regionDescription}" >Region</option>
+									</select>
+								</div>
+							    <div class="col">
+									<label for="province3" class="form-label">Province</label>
+									<select id="province3" class="form-select form-control" aria-label="province3" name="customerAddress[3].province" onchange="deriveAddress(this)" required></select>
+								</div>
+							    <div class="col">
+									<label for="municipal3" class="form-label">City</label>
+									<select id="municipal3" class="form-select form-control" aria-label="municipal3" name="customerAddress[3].municipal" required></select>
+								</div>
+				 			</div>
+				 			<div class="row">
+							    <div class="col">
+									<label for="street3" class="form-label">House Number/Street Name</label>
+									<input type="text" class="form-control" name="customerAddress[3].street" id="street3" required>
+								</div>
+								<div class="col-3">
+									<label for="zipCode3" class="form-label">Zip Code</label>
+									<input type="text" class="form-control" name="customerAddress[3].zipCode" id="zipCode3" required>
+								</div>
+				 			</div>
+			 			</div>
+			 			<br>
+			 			<hr>
+			 			<h5>Store Photo</h5>
+			 			<br>
+			 			<div class="row">
+			 				<div class="col-auto">
+					 			<input type="file" name="file" class="form-control" accept="image/png, image/jpeg, image/jpg">
+			 				</div>
+			 			</div>
+			 			<hr>
+					    <input class="btn btn-primary" type="submit" value="Submit">
+						<input class="btn btn-secondary" type="reset" value="Reset">
+				 	</div> 
+				</div>
+			</form >
+		</div>
+		
+		<th:block th:replace="~{template :: footer}"></th:block >
+		<script type="text/javascript" th:src="@{/js/public/jquery-3.6.0.min.js}"></script>
+		<th:block th:replace="~{template :: scripts}"></th:block>
+		<script type="text/javascript" th:src="@{/js/customer/customer_address.js}"></script>
+		<script type="text/javascript" th:src="@{/js/customer/customer_phone_add.js}"></script>
+		<script th:inline="javascript">
+			var customerId = '';
+			
+			function copyAddress(addressType) {
+				$("#region"+addressType).find('option').remove().end().append($("#region0 > option").clone()).val($("#region0").val());
+                
+                $("#province"+addressType).find('option').remove().end().append($("#province0 > option").clone()).val($("#province0").val());
+                
+                $("#municipal"+addressType).find('option').remove().end().append($("#municipal0 > option").clone()).val($("#municipal0").val());
+                
+                $("#zipCode"+addressType).val($("#zipCode0").val());
+
+                $("#street"+addressType).val($("#street0").val());
+			}
+			
+			function sameAddress(addressType, isRequired) {
+				$("#region"+addressType).prop('required', isRequired);
+		        $("#province"+addressType).prop('required', isRequired);
+		        $("#municipal"+addressType).prop('required', isRequired);           
+                $("#zipCode"+addressType).prop('required', isRequired);
+                $("#street"+addressType).prop('required', isRequired);
+			}
+			
+			function clearSelectedVal(addressType) {
+				$("#region"+addressType).val('');
+		        $("#province"+addressType).val('');
+		        $("#municipal"+addressType).val('');           
+                $("#zipCode"+addressType).val('');
+                $("#street"+addressType).val('');
+			}
+			
+			$(document).ready(function(){
+			    $("#fillPurchaseOfficeAddress").on("click", function(){
+					if (this.checked) { 
+	                	copyAddress(this.value);
+	                	sameAddress(this.value, false);
+		                
+		                $("#purchaseOfficeAddress").hide();
+			    	} else {
+	                	sameAddress(this.value, true);
+						clearSelectedVal(this.value);
+						
+						$("#purchaseOfficeAddress").show();
+					}
+			    });
+			    
+			    $("#fillWarehouseAddress").on("click", function(){
+					if (this.checked) { 
+	                	copyAddress(this.value);
+	                	sameAddress(this.value, false);
+		                
+		                $("#warehouseAddress").hide();
+			    	} else {
+	                	sameAddress(this.value, true);
+						clearSelectedVal(this.value);
+						
+						$("#warehouseAddress").show();
+					}
+			    });
+			    
+			    $("#fillOwnerAddress").on("click", function(){
+					if (this.checked) { 
+	                	copyAddress(this.value);
+	                	sameAddress(this.value, false);
+		                
+		                $("#ownerAddress").hide();
+			    	} else {
+	                	sameAddress(this.value, true);
+						clearSelectedVal(this.value);
+						
+						$("#ownerAddress").show();
+					}
+			    });
+			    
+			    $("#employeeRegistrationForm").on("submit", function() {
+					if($("#fillPurchaseOfficeAddress").is(":checked")) {
+						copyAddress($("#fillPurchaseOfficeAddress").val());
+					}
+					if($("#fillWarehouseAddress").is(":checked")) {
+						copyAddress($("#fillWarehouseAddress").val());
+					}
+					if($("#fillOwnerAddress").is(":checked")) {
+						copyAddress($("#fillOwnerAddress").val());
+					}
+				});
+			    
+			});
+		</script >
+	</body>
+</HTML>

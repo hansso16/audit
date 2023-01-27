@@ -43,4 +43,16 @@ public class CustomerBO {
 		}
 		return dto;
 	}
+	
+	public Customer retrieveCustomerEntity(String customerCode) throws Exception {
+		
+		Customer customer = null;
+		try {
+			customer = customerRepo.findByCustomerCode(customerCode);
+		} catch (Exception ex) {
+			log.error(ex.getMessage());
+			throw new Exception("Error retriveing Customer: " + ex.getMessage());
+		}
+		return customer;
+	}
 }

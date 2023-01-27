@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<HTML lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<th:block th:replace="~{template :: headfiles}"></th:block>
+	</head>
+	<body>
+		<th:block th:replace="~{template :: menu}"></th:block >
+		<br>
+		
+		<div class="container">
+			<div class="p-5 mb-4 bg-light rounded-3" th:if="${!#strings.isEmpty(customerCode)}">
+			  <p class="lead">Customer has been successfully registered.</p>
+			  <p class="lead">Customer Code: <strong><span th:text="${customerCode}">1234</span ></strong></p>
+			  <hr class="my-4">
+			  <p class="lead">
+			    <a class="btn btn-primary btn-lg" href="#" th:href="@{/customer/add}" role="button">Register another Customer</a>
+			  </p>
+			</div>
+		</div>
+		
+		<th:block th:replace="~{template :: footer}"></th:block >
+		<th:block th:replace="~{template :: scripts}"></th:block >
+	</body>
+</HTML>

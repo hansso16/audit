@@ -84,6 +84,12 @@ public class CustomerAddressServiceImpl implements BaseCustomerService {
 			if (customerDTO == null) {
 				throw new Exception("getCustomerDetails(String customerCode): Customer is null.");
 			}
+			
+			User assignedUser = userService.retrieveUserDetails(customerDTO.getAssignedUser());
+			if (assignedUser != null) {
+				customerDTO.setAssignedUsername(assignedUser.getUsername());
+			}
+			
 			response.setCustomerTO(customerDTO);
 			customerId = customerDTO.getCustomerId();
 			response.setCustomerId(customerId);

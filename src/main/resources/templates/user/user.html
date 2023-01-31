@@ -19,7 +19,7 @@
 			</div>
 			<div class="card mb-4" th:if="${res != null}">
 				<div class="card-body">
-			    	<form action="#" id="userForm" th:with="user=${res.user}">
+			    	<th:block th:with="user=${res.user}">
 						<h4>User Details</h4>
 						<input type="hidden" name="user.userCode" th:value="${user.userCode}" value="asdf" />
 				        <div class="row mb-2">
@@ -52,6 +52,7 @@
 			                    <input type="text" name="lastChangedUser" id="lastChangedUser" class="form-control" th:value="${user.lastChangedUser}" required readonly>
 				        	</div>
 						</div>
+			    	</th:block>
 			    	<th:block th:if="${res.user.terminationDate == null}">
 				    	<hr>
 				    	<div>
@@ -67,7 +68,7 @@
 											<h5 class="modal-title" id="exampleModalLabel">Update Access</h5>
 											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 										</div>
-										<form action="#" th:action="@{/update}" method="POST" id="updateAccessForm" th:with="user=${res.user}">
+										<form action="#" th:action="@{__${#ctx.springRequestContext.requestUri}__/updateaccess}" method="POST" id="terminationDateForm" th:with="user=${res.user}">
 											<div class="modal-body">
 												<input type="hidden" name="userCode" th:value="${user.userCode}" value="asdf" />
 												<input type="hidden" name="username" th:value="${user.username}" value="asdf" />

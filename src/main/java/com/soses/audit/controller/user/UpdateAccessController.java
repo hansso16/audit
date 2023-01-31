@@ -26,7 +26,7 @@ public class UpdateAccessController {
 		this.userSerivce = userSerivce;
 	}
 	
-	@PostMapping("/{username}/update")
+	@PostMapping("/{username}/updateaccess")
 	public RedirectView terminateUser(@PathVariable String username, Model model, RedirectAttributes redirectAttrs
 			, UpdateAccessRequest request) {
 		

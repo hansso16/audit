@@ -23,7 +23,9 @@ import com.soses.audit.common.GeneralUtil;
 import com.soses.audit.dto.CustomerPhoneTO;
 import com.soses.audit.dto.CustomerTO;
 import com.soses.audit.entity.CustomerPhone;
+import com.soses.audit.entity.User;
 import com.soses.audit.service.customer.BaseCustomerService;
+import com.soses.audit.service.user.UserService;
 import com.soses.audit.util.CustomerPhoneTransformerUtil;
 
 import jakarta.transaction.Transactional;
@@ -39,10 +41,14 @@ public class CustomerPhoneServiceImpl implements BaseCustomerService {
 	
 	private CustomerPhoneBO customerPhoneBO;
 	
-	public CustomerPhoneServiceImpl(CustomerBO customerBO, CustomerPhoneBO customerPhoneBO) {
+	private UserService userService;
+	
+	public CustomerPhoneServiceImpl(CustomerBO customerBO, CustomerPhoneBO customerPhoneBO
+			, UserService userService) {
 		super();
 		this.customerBO = customerBO;
 		this.customerPhoneBO = customerPhoneBO;
+		this.userService = userService;
 	}
 	
 	@Override
@@ -56,6 +62,11 @@ public class CustomerPhoneServiceImpl implements BaseCustomerService {
 			CustomerTO customerDTO = customerBO.retrieveCustomer(customerCode);
 			if (customerDTO == null) {
 				throw new Exception("getCustomerDetails(String customerCode): Customer is null.");
+			}
+			
+			User assignedUser = userService.retrieveUserDetails(customerDTO.getAssignedUser());
+			if (assignedUser != null) {
+				customerDTO.setAssignedUsername(assignedUser.getUsername());
 			}
 
 			// Get Customer Phone Details

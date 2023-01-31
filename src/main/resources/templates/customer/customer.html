@@ -29,9 +29,10 @@
 			            <li class="nav-item" th:if="${res.customerTO.assignedUsername==#authentication.getPrincipal().getUsername() || #authorization.expression('hasRole(''SUPV'')')}" >
 			                <a class="nav-link" th:classappend="${#ctx.springRequestContext.requestUri.contains('address') ? 'active disabled' : ''}" href="#" th:href="@{/customer/} + ${res.customerCode} + @{/address}" th:text="Address">Address</a>
 			            </li>
-			            <li class="nav-item me-auto" th:if="${res.customerTO.assignedUsername==#authentication.getPrincipal().getUsername() || #authorization.expression('hasRole(''SUPV'')')}">
+			            <li class="nav-item" th:if="${res.customerTO.assignedUsername==#authentication.getPrincipal().getUsername() || #authorization.expression('hasRole(''SUPV'')')}">
 			                <a class="nav-link" th:classappend="${#ctx.springRequestContext.requestUri.endsWith('phone') ? 'active disabled' : ''}" href="#" th:href="@{/customer/} + ${res.customerCode} + @{/phone}" th:text="Phone">Phone Number</a>
 			            </li>
+			            <li class="nav-item me-auto"></li>
 			            <li class="nav-item" th:if="${#ctx.springRequestContext.requestUri.endsWith('profile')}" sec:authorize="hasRole('SUPV')">
 			                <a class="nav-link" id="assignButton" data-bs-toggle="modal" data-bs-target="#assignModal" href="#">Assign User</a>
 			            </li>

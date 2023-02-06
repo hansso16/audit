@@ -32,8 +32,7 @@ public class GeneralUtil {
 	}
 	
 	public static LocalDateTime stringToLocalDateTime(String dateTime) {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("LLL dd, yyyy hh:mm a"); 
-		return LocalDateTime.parse(dateTime, formatter);
+		return LocalDateTime.parse(dateTime, dateTimeFormatter);
 	}
 	
 	public static LocalDate stringToLocalDate(String date) {

@@ -80,13 +80,13 @@
 				<span class="" th:text="'Total Records Found: ' + ${totalRows}"></span >
 				<ul class="pagination justify-content-center">
 					<li class="page-item" th:classappend="${currentPage+1 == 1? 'disabled':''}">
-						<a class="page-link" th:href="@{#ctx.springRequestContext.requestUri(page=${currentPage}, ${searchName}=${searchValue})}" th:text="Previous">Previous</a>
+						<a class="page-link" th:href="@{__${#ctx.springRequestContext.requestUri}__(page=${currentPage}, ${searchName}=${searchValue})}" th:text="Previous">Previous</a>
 					</li>
 					<li class="page-item" th:each="pageNumber : ${#numbers.sequence(1, totalPages)}" th:classappend="${currentPage+1 == pageNumber? 'active' : ''}">
-						<a class="page-link" href="#" th:href="@{#ctx.springRequestContext.requestUri(page=${pageNumber}, ${searchName}=${searchValue})}" th:text="${pageNumber}">0</a>
+						<a class="page-link" href="#" th:href="@{__${#ctx.springRequestContext.requestUri}__(page=${pageNumber}, ${searchName}=${searchValue})}" th:text="${pageNumber}">0</a>
 					</li>
 					<li class="page-item" th:classappend="${currentPage+1 == totalPages? 'disabled':''}">
-						<a class="page-link"  th:href="@{#ctx.springRequestContext.requestUri(page=${currentPage+2}, ${searchName}=${searchValue})}" th:text="Next">Next</a>
+						<a class="page-link"  th:href="@{__${#ctx.springRequestContext.requestUri}__(page=${currentPage+2}, ${searchName}=${searchValue})}" th:text="Next">Next</a>
 					</li>
 				</ul>
 			</nav>
